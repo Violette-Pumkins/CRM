@@ -5,7 +5,7 @@ class controllerjure{
      * @param $choix
      * @return void
      */
-        function getListePilotes($choix=PDO::FETCH_ASSOC){
+        function afficherListeJure($choix=PDO::FETCH_ASSOC){
         $sql=' SELECT * FROM jure ORDER BY ID_Jure ASC'; 
         try{
         $res=DBAirDi::getConnexion()->query($sql);
@@ -13,12 +13,12 @@ class controllerjure{
             
             switch($choix){
                 case PDO::FETCH_CLASS:
-                $res->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'pilote', ['pil', 'pilNom', 'adr']);
+                $res->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'jure', ['ID_Jure', 'Nom', 'Prenom', 'Adresse_perso', 'Tel_perso', 'Portable_perso', 'Mail_perso', 'Visible_sur_VALCE', 'Visible_sur_CERES', 'id_entreprise']);
                 break;
             }
 
             $records=$res->fetchAll();
-            // var_dump($records);
+            var_dump($records);
             $res->closeCursor();
             DBAirDi::disconnect();
 
