@@ -32,6 +32,9 @@
             </li>
                 <a class="nav-link" href="#">Historique<span class="sr-only">(current)</span></a>
             </li>
+            </li>
+                <a class="nav-link" href="view/view_listejure.php">Jurés<span class="sr-only">(current)</span></a>
+            </li>
 
             </ul>
             <form class="form-inline my-2 my-lg-0">
