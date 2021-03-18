@@ -1,14 +1,14 @@
 <?php
-class controllerjure{
+class Controllerjure{
 
     /**
      * @param $choix
      * @return void
      */
-        function afficherListeJure($choix=PDO::FETCH_ASSOC){
+        public static function afficherListeJure($choix=PDO::FETCH_ASSOC){
         $sql=' SELECT * FROM jure ORDER BY ID_Jure ASC'; 
         try{
-        $res=DBAirDi::getConnexion()->query($sql);
+        $res=BDCRM::getConnexion()->query($sql);
             var_dump($res);
             
             switch($choix){
@@ -20,7 +20,7 @@ class controllerjure{
             $records=$res->fetchAll();
             var_dump($records);
             $res->closeCursor();
-            DBAirDi::disconnect();
+            BDCRM::disconnect();
 
 
         }catch(PDOException $e){

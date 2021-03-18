@@ -10,9 +10,15 @@ private $Portable_perso;
 private $Mail_perso;
 
     /**
-     * @param string $pil
-     * @param string $pilNom
-     * @param string $adr
+     * @param int $ID_Jure
+     * @param string $Nom
+     * @param string $Prenom
+     * @param string $Adresse_perso
+     * @param int $Tel_perso
+     * @param int $Portable_perso
+     * @param  string $Mail_perso
+     * @param
+     * @param
      * 
      * @return void
      */

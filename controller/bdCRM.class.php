@@ -1,5 +1,7 @@
 <?php
-    class DBAirDi{
+
+
+    class BDCRM{
 
         private static $connexion;
         private $error;
@@ -40,8 +42,8 @@
             catch(PDOException $e){
                 die('<h1>Erreur de connexion: </h1>'.$e->getMessage());
             }
-            DBAirDi::$connexion=$PDO;
-            return DBAirDi::$connexion;
+            BDCRM::$connexion=$PDO;
+            return BDCRM::$connexion;
             var_dump($connexion);
             
 
@@ -54,7 +56,7 @@
         * fonction déconnection BDD
         */
         public static function disconnect(){
-            DBAirDi::$connexion=NULL;
+            BDCRM::$connexion=NULL;
         }
 
         /**
@@ -62,11 +64,11 @@
         */
 
         public static function getConnexion(){
-            if(DBAirDi::$connexion != NULL){
-                return DBAirDi::$connexion;
+            if(BDCRM::$connexion != NULL){
+                return BDCRM::$connexion;
             }
             else{
-                return DBAirDi::connect();
+                return BDCRM::connect();
             }
         }
 
