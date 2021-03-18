@@ -32,7 +32,6 @@
             </li>
                 <a class="nav-link" href="#">Historique<span class="sr-only">(current)</span></a>
             </li>
-            <li><i class="fas fa-cloud"></i></li>
 
             </ul>
             <form class="form-inline my-2 my-lg-0">
