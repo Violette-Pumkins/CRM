@@ -6,7 +6,7 @@ class Controllerjure{
      * @return void
      */
         public static function afficherListeJure($choix=PDO::FETCH_ASSOC){
-        $sql=' SELECT * FROM jure ORDER BY ID_Jure ASC'; 
+        $sql='SELECT * FROM jure ORDER BY ID_Jure ASC'; 
         try{
         $res=BDCRM::getConnexion()->query($sql);
             var_dump($res);

@@ -1,5 +1,10 @@
 <?php
     //appel fichier externes
+    function autoloadClassModel($class){
+        global $nameApp;
+        require_once $nameApp . '/model/' . $class . '.class.php';
+}
+spl_autoload_register('autoloadClassModel');
 
     //initialisation variable
     $action='accueil';
@@ -28,7 +33,7 @@
             break;
         
         case 'listejure':
-            $listeJures=afficherListeJure();
+            $listeJures=afficherListeJure($choix);
             require('view/view_header.php');
             require('view/view_listejure.php');
             require('view/view_footer.php');

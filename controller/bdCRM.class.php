@@ -45,10 +45,6 @@
             BDCRM::$connexion=$PDO;
             return BDCRM::$connexion;
             var_dump($connexion);
-            
-
-
-
         } 
 
 
