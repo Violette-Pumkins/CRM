@@ -14,23 +14,24 @@ private $Mail_perso;
      * @param string $Nom
      * @param string $Prenom
      * @param string $Adresse_perso
-     * @param int $Tel_perso
-     * @param int $Portable_perso
-     * @param  string $Mail_perso
+     * @param string $Tel_perso
+     * @param string $Portable_perso
+     * @param string $Mail_perso
      * @param
      * @param
      * 
      * @return void
      */
-        public function __construct(int $ID_Jure, string $Nom, string $Prenom, string $Adresse_perso, int $Tel_perso, int $Portable_perso, string $Mail_perso){
+        public function __construct(string $ID_Jure, string $Nom, string $Prenom, string $Adresse_perso, string $Tel_perso, string $Portable_perso, string $Mail_perso ){
         
-        $this->setID_Jure($ID_Jure);
+        $this->setID_Jure(intval($ID_Jure));
         $this->setNom($Nom);
         $this->setPrenom($Prenom);
         $this->setAdresse_perso($Adresse_perso);
-        $this->setTel_perso($Tel_perso);
-        $this->setPortable_perso($Portable_perso);
+        $this->setTel_perso(strval($Tel_perso));
+        $this->setPortable_perso(strval($Portable_perso));
         $this->setMail_perso($Mail_perso);
+        
     }
 
     //getters
@@ -39,32 +40,32 @@ private $Mail_perso;
         return $this->ID_Jure;
     }
 
-    public function getNom() :int
+    public function getNom() :string
     {
         return $this->Nom;
     }
 
-    public function getPrenom() :int
+    public function getPrenom() :string
     {
         return $this->Prenom;
     }
 
-    public function getAdresse_perso() :int
+    public function getAdresse_perso() :string
     {
         return $this->Adresse_perso;
     }
 
-    public function getTel_perso() :int
+    public function getTel_perso() :string
     {
         return $this->Tel_perso;
     }
 
-    public function getPortable_perso() :int
+    public function getPortable_perso() :string
     {
         return $this->Portable_perso;
     }
 
-    public function getMail_perso() :int
+    public function getMail_perso() :string
     {
         return $this->Mail_perso;
     }

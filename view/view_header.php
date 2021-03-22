@@ -10,8 +10,8 @@
     <title>Document</title>
 </head>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <nav class="navbar navbar-expand-lg bg-light">
+        <img src="layout/img/layout_set_logo.jfif" alt="AFPA" class="navbar-brand">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,7 +22,11 @@
                 
                 <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
             </li>
-                <a class="nav-link" href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i>contact-Aide<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    contact-Aide
+                    <span class="sr-only">(current)</span>
+                </a>
             </li>
                 <a class="nav-link" href="#">Session en cours<span class="sr-only">(current)</span></a>
             </li>
@@ -33,7 +37,7 @@
                 <a class="nav-link" href="#">Historique<span class="sr-only">(current)</span></a>
             </li>
             </li>
-                <a class="nav-link" href="view/view_listejure.php">Jurés<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="index.php?action=listejure">Jurés<span class="sr-only">(current)</span></a>
             </li>
 
             </ul>

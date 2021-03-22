@@ -32,7 +32,7 @@
             // $pass=$paramini['pass'];
             extract($paramini['connexion bdd']);
             $dsn='mysql:host='.$host."; port=".$port ."; dbname=".$bdd ."; charset=UTF8";
-            var_dump($dsn);
+            // var_dump($dsn);
             
             try{
 
@@ -44,7 +44,7 @@
             }
             BDCRM::$connexion=$PDO;
             return BDCRM::$connexion;
-            var_dump($connexion);
+            // var_dump($connexion);
         } 
 
 

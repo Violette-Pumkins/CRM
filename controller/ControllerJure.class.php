@@ -1,15 +1,17 @@
 <?php
+
 class Controllerjure{
 
     /**
      * @param $choix
      * @return void
      */
-        public static function afficherListeJure($choix=PDO::FETCH_ASSOC){
+    public static function afficherListeJure($choix=PDO::FETCH_ASSOC) : array
+    {
         $sql='SELECT * FROM jure ORDER BY ID_Jure ASC'; 
         try{
         $res=BDCRM::getConnexion()->query($sql);
-            var_dump($res);
+            // var_dump($res);
             
             switch($choix){
                 case PDO::FETCH_CLASS:
@@ -18,7 +20,7 @@ class Controllerjure{
             }
 
             $records=$res->fetchAll();
-            var_dump($records);
+            // var_dump($records);
             $res->closeCursor();
             BDCRM::disconnect();
 
