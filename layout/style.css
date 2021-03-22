@@ -15,11 +15,11 @@ a:hover{
     color: white;
 }
 
-thead{
+.thead{
     background-color:#057d13;
 }
 div.container-xl{
-    margin-top:100px; 
+    margin-top:50px; 
 }
 div.container-sm{
     margin-top:100px;  
