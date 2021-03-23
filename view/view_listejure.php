@@ -20,7 +20,6 @@ require('entity/Jure.class.php');
         <table class="table table-bordered">
             <thead class="thead">
                 <tr>
-                <th scope="col">#</th>
                 <th scope="col">Noms</th>
                 <th scope="col">Prenom</th>
                 <th scope="col">Adresse</th>
@@ -35,7 +34,6 @@ require('entity/Jure.class.php');
             foreach($jures as $jure){
                 //utilise le tb comme un tb normal
                 echo(' <tr>
-                <th scope="row">'.$jure->getID_Jure().'</th>
                 <td>'.$jure->getNom().'</td>
                 <td>'.$jure->getPrenom().'</td>
                 <td>'.$jure->getAdresse_perso().'</td>

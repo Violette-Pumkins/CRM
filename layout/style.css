@@ -1,6 +1,5 @@
 footer{
     background-color: #057d13;
-    position: absolute;
     left: 0;
     bottom: 0;
     height: 100px;
@@ -26,4 +25,8 @@ div.container-sm{
 }
 a.add{
     margin-bottom:30px;
+}
+
+.container-sm{
+    min-height:70vh;
 }
