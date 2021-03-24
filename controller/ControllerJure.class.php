@@ -69,13 +69,44 @@ class Controllerjure{
         if(ControllerJure::checkentreprise( $nom, $adresse, $tel, $port, $mail)<2)
         {
             //create request insert entreprise et insert juré
-            echo "ok!";
+            $sql1= 'INSERT INTO `entreprise`(`Nom_entreprise`, `Adresse_entreprise`, `Tel_entreprise`, `Port_entreprise`, `Mail_entreprise`) VALUES (nom_en, adresse_en, tel_en, port_en, mail_en)';
+
+            $sql2= 'INSERT INTO `jure`(`ID_Jure`, `Nom`, `Prenom`, `Adresse_perso`, `Tel_perso`, `Portable_perso`, `Mail_perso`, `Visible_sur_VALCE`, `Visible_sur_CERES`, `id_entreprise`) VALUES ( :nom, :prenom, :adresse, :tel, :port, :mail, :vv, :vc, (SELECT `id_entreprise` FROM entreprise WHERE Nom_entreprise LIKE :nom_en AND Adresse_entreprise LIKE :adresse_en AND Tel_entreprise LIKE :tel_en AND Port_entreprise LIKE :port_en AND Mail_entreprise LIKE :mail_en)';
+
+            try{
+                $co=BDCRM::getConnexion();
+                $res=$co->prepare($sql1);
+                $res->execute(array(':nom_en'=>$nom, ':adresse_en'=>$adresse, ':tel_en'=>$tel, ':port_en'=>$port, ': mail_en'=>$mail));
+                $res=$co->prepare($sql2);
+                $res->execute(array(':nom'=> $nomj,':prenom'=> $prenomj,':adresse'=> $adressej,':tel'=> $telj,':port'=> $portj,':mail'=> $mailj, ':vv'=> $vv,':vc'=> $vc,':nom_en'=>$nom, ':adresse_en'=>$adresse, ':tel_en'=>$tel, ':port_en'=>$port, ': mail_en'=>$mail));
+    
+                $records=$res->fetchAll();
+                $res->closeCursor();
+                BDCRM::disconnect();
+    
+            }catch(PDOException $e){
+                die('<h1>Erreur lecture en BDD</h1>'. $e->getMessage());
+            }
+
 
         }
         elseif(ControllerJure::checkentreprise( $nom, $adresse, $tel, $port, $mail)>1)
         {
             //create insert juré avec select id entreprise
-            echo "pas ok!";
+            $sql3= 'INSERT INTO `jure`(`ID_Jure`, `Nom`, `Prenom`, `Adresse_perso`, `Tel_perso`, `Portable_perso`, `Mail_perso`, `Visible_sur_VALCE`, `Visible_sur_CERES`, `id_entreprise`) VALUES ( :nom, :prenom, :adresse, :tel, :port, :mail, :vv, :vc, (SELECT `id_entreprise` FROM entreprise WHERE Nom_entreprise LIKE :nom_en AND Adresse_entreprise LIKE :adresse_en AND Tel_entreprise LIKE :tel_en AND Port_entreprise LIKE :port_en AND Mail_entreprise LIKE :mail_en)';
+            
+            try{
+                $co=BDCRM::getConnexion();
+                $res=$co->prepare($sql3);
+                $res->execute(array(':nom'=> $nomj,':prenom'=> $prenomj,':adresse'=> $adressej,':tel'=> $telj,':port'=> $portj,':mail'=> $mailj, ':vv'=> $vv,':vc'=> $vc,':nom_en'=>$nom, ':adresse_en'=>$adresse, ':tel_en'=>$tel, ':port_en'=>$port, ': mail_en'=>$mail));
+    
+                $records=$res->fetchAll();
+                $res->closeCursor();
+                BDCRM::disconnect();
+    
+            }catch(PDOException $e){
+                die('<h1>Erreur lecture en BDD</h1>'. $e->getMessage());
+            }
         }
     }
 
