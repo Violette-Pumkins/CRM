@@ -1,5 +1,20 @@
 
+<?php
+    require('entity/Entreprise.class.php');
+
+
+    $r=ControllerEntreprise::afficherListeEntreprise();
     
+    $ens=array();
+    
+    foreach($r as $en){
+        // var_dump($en);
+        //remplit le tb par mon objet
+        $ens[]= new Entreprise($en['id_entreprise'], $en['Nom_entreprise'], $en['Adresse_entreprise'], $en['Tel_entreprise'], $en['Port_entreprise'], $en['Mail_entreprise']);
+        
+    }
+    // var_dump($en);
+?>
     <div class="container-xl">
         <div class="row">
             <div class="col-md">
@@ -170,162 +185,50 @@
                                 <td> <input type="checkbox" name="vc" style="height:25px; width:25px;"> <br><br>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="action" value="<?php echo $action ?>">
-                                </td>
-                            </tr>
-
+                            
                     </tbody>
                 </table>
             </div>
             <div class="col-md">
                 <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">ENTREPRISE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            <tr>
-                            
-                                <div class="input-group has-validation">
-                                    <td><label for="nom_en">Nom entreprise:</label></td>
-                                <td> <input type="text" class="form-control <?php
-                                if(isset($_POST['nom_en'])){
-                                    if(!ControllerJure::validateField($_POST['nom_en']) ){
-                                        echo "is-invalid";
-                                    }
-                                    else{
-                                        echo "is-valid";
-                                    }
-                                    
-                                }
-                                ?>" name="nom_en" id="inputnom_en"  value="<?php
-                                if(isset($_POST['nom_en'])){
-                                    echo $_POST['nom_en'];
-                                }
-                                ?>" required>
-                                    <div class="invalid-feedback">
-                                        Le nom d'entreprise n'est pas correct.
-                                    </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                            
-                            <div class="input-group has-validation">
-                                <td><label for="adresse_en">Adresse entreprise:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['adresse_en'])){
-                                if(!ControllerJure::validateField($_POST['adresse_en'])){
-                                    echo "is-invalid";
-                                }
-                                else{
-                                    echo "is-valid";
-                                }
-                                
-                            }
-                            ?>" name="adresse_en" id="inputadresse_en"  value="<?php
-                            if(isset($_POST['adresse_en'])){
-                                echo $_POST['adresse_en'];
-                            }
-                            ?>" required>
-                                <div class="invalid-feedback">
-                                    L'adresse d'entreprise n'est pas correct.
-                                </div>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr>
-                            
-                            <div class="input-group has-validation">
-                                <td><label for="tel_en">Téléphone entreprise:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['tel_en'])){
-                                if(!ControllerJure::validateField($_POST['tel_en'])or !ControllerJure::validateNumber($_POST['tel_en'])){
-                                    echo "is-invalid";
-                                }
-                                else{
-                                    echo "is-valid";
-                                }
-                                
-                            }
-                            ?>" name="tel_en" id="inputtel_en"  value="<?php
-                            if(isset($_POST['tel_en'])){
-                                echo $_POST['tel_en'];
-                            }
-                            ?>" required>
-                                <div class="invalid-feedback">
-                                    Le numéro de téléphone d'entreprise n'est pas correct.
-                                </div>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr>
-                            
-                            <div class="input-group has-validation">
-                                <td><label for="port_en">Portable entreprise:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['port_en'])){
-                                if(!ControllerJure::validateField($_POST['port_en'])or !ControllerJure::validateNumber($_POST['port_en'])){
-                                    echo "is-invalid";
-                                }
-                                else{
-                                    echo "is-valid";
-                                }
-                                
-                            }
-                            ?>" name="port_en" id="inputport_en"  value="<?php
-                            if(isset($_POST['port_en'])){
-                                echo $_POST['port_en'];
-                            }
-                            ?>" required>
-                                <div class="invalid-feedback">
-                                    Le numéro de portable d'entreprise n'est pas correct.
-                                </div>
-                                </div>
-                            </td>
-                        </tr> 
-                        <tr>
-                            
-                            <div class="input-group has-validation">
-                                <td><label for="mail_en">Mail entreprise:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['mail_en'])){
-                                if(!ControllerJure::validateField($_POST['mail_en'])){
-                                    echo "is-invalid";
-                                }
-                                else{
-                                    echo "is-valid";
-                                }
-                                
-                            }
-                            ?>" name="mail_en" id="inputmail_en"  value="<?php
-                            if(isset($_POST['mail_en'])){
-                                echo $_POST['mail_en'];
-                            }
-                            ?>" required>
-                                <div class="invalid-feedback">
-                                    Le mail d'entreprise n'est pas correct.
-                                </div>
-                                </div>
-                            </td>
-                        </tr>
-                            <td>
-                                <input type="hidden" name="action" value="<?php echo $action ?>">
-                            </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button type="submit" name="add" value="add" class="btn btn-outline-success">Validez</button>
-                                </td>
-                            </tr>
-                        </form>
-                    </tbody>
+                <thead>
+                    <tr>
+                        <th scope="col">Selectionnez une entreprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>
+                    <select class="form-control form-control-lg">
+                    <?php foreach($ens as $en){
+                    echo ('<option>'.$en->getNom_en().'</option>');
+                    }?>
+                    </select>
+                </td>
+                </tr>
+                <tr>
+                <td>
+                <a href="index.php?action=addEn" class="btn btn-outline-success" role="button" aria-pressed="true">Ajoutez une entreprise liée</a>
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="action" value="<?php echo $action ?>">
+                    </td>
+                </tr>
+                <tr>
+                <td>
+                    <input type="hidden" name="action" value="<?php echo $action ?>">
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="add" value="add" class="btn btn-outline-success">Validez</button>
+                    </td>
+                </tr>
+                        
+                </tbody>
                 </table>
-            </div>
         </div>
-
+    </form>
     </div>

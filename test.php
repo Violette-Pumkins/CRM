@@ -3,6 +3,8 @@
 require('entity/Jure.class.php');
 require('controller/ControllerJure.class.php');
 require('controller/BDCRM.class.php');
+require('controller/ControllerEntreprise.class.php');
+require('entity/Entreprise.class.php');
 
     class Assert
     {
@@ -32,4 +34,21 @@ $test_jure= new Jure($ID_Jure, $Nom, $Prenom, $Adresse_perso, $Tel_perso, $Porta
     // } catch (Exception $e) {
     //     echo '❌ Caught exception: ',  $e->getMessage(), "<br/>";
    //}
+$ID_en=10;
+$Nom_en='Nom_en';
+$Adresse_en='Adresse_en';
+$Tel_en='0232545587';
+$Portable_en='0623338546';
+$Mail_en='mail_en';
+
+
+$test_en= new Entreprise($ID_en, $Nom_en, $Adresse_en, $Tel_en, $Portable_en, $Mail_en);
+
+
+    try {
+        Assert::AreEqual( $test_en->getNom_en(), $Nom_en );
+        echo '✔️'.$test_en->getNom_en().' et '.$Nom_en.'sont égaux'.'<br/>';
+    } catch (Exception $e) {
+        echo '❌ Caught exception: ',  $e->getMessage(), "<br/>";
+    }
 ?>

@@ -33,13 +33,8 @@ switch ($action) {
 
     case 'addJure':
         if ($_GET['action'] = 'addjure') {
-            $nomj = isset($_POST['nom']) ? $_POST['nom'] : null;
 
-            // var_dump(isset($nomj));
-            
-
-            
-            $nomj = isset($_POST['nom']) ? $_POST['nom'] : null;
+            // $nomj = isset($_POST['nom']) ? $_POST['nom'] : null;
             // var_dump(isset($nomj));
             $prenomj = isset($_POST['prenom']) ? $_POST['prenom'] : null;
             // var_dump(isset($prenomj));
@@ -56,16 +51,16 @@ switch ($action) {
             $vc = isset($_POST['vc']) ? true : false;
             // var_dump(isset($vc));//entreprise 
             
-            $nome = isset($_POST['nom_en']) ? $_POST['nom_en'] : NULL;
-            // var_dump(isset($nome));
-            $adressee = isset($_POST['adresse_en']) ? $_POST['adresse_en'] : NULL;
-            // var_dump(isset($adressee));
-            $tele = isset($_POST['tel_en']) ? $_POST['tel_en'] : NULL;
-            // var_dump(isset($tele));
-            $porte = isset($_POST['port_en']) ? $_POST['port_en'] : NULL;
-            // var_dump(isset($porte));
-            $maile = isset($_POST['mail_en']) ? $_POST['mail_en'] : NULL;
-            // var_dump(isset($maile));
+            // $nome = isset($_POST['nom_en']) ? $_POST['nom_en'] : NULL;
+            // // var_dump(isset($nome));
+            // $adressee = isset($_POST['adresse_en']) ? $_POST['adresse_en'] : NULL;
+            // // var_dump(isset($adressee));
+            // $tele = isset($_POST['tel_en']) ? $_POST['tel_en'] : NULL;
+            // // var_dump(isset($tele));
+            // $porte = isset($_POST['port_en']) ? $_POST['port_en'] : NULL;
+            // // var_dump(isset($porte));
+            // $maile = isset($_POST['mail_en']) ? $_POST['mail_en'] : NULL;
+            // // var_dump(isset($maile));
         }
 
 
@@ -81,6 +76,37 @@ switch ($action) {
 
         require('view/view_header.php');
         require('view/forms/view_form.php');
+        require('view/view_footer.php');
+        break;
+
+
+    case 'addEn':
+        if ($_GET['action'] = 'addEn') {
+
+            $nome = isset($_POST['Nom_entreprise']) ? $_POST['Nom_entreprise'] : NULL;
+            var_dump(isset($nome));
+            echo($nome);
+            $adressee = isset($_POST['Adresse_en']) ? $_POST['Adresse_en'] : NULL;
+            var_dump(isset($adressee));
+            echo($adressee);
+            $tele = isset($_POST['Tel_en']) ? $_POST['Tel_en'] : NULL;
+            var_dump(isset($tele));
+            $porte = isset($_POST['Port_en']) ? $_POST['Port_en'] : NULL;
+            var_dump(isset($porte));
+            $maile = isset($_POST['Mail_en']) ? $_POST['Mail_en'] : NULL;
+            var_dump(isset($maile));
+        }
+            //verifie l'existence des variables mais pas la véracité
+            if ((isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile))and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
+            ) {
+                // var_dump("hello!");
+                ControllerEntreprise::addEntreprise($nome, $adressee, $tele, $porte, $maile);
+                print_r("a rediriger");
+                
+                break;
+            }
+        require('view/view_header.php');
+        require('view/forms/view_form_en.php');
         require('view/view_footer.php');
         break;
 }
