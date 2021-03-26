@@ -14,7 +14,7 @@ require('entity/Jure.class.php');
     }
     ?>
     <div class="container-sm">
-
+        
     <a class="btn btn-outline-success add" href="index.php?action=addJure" role="button">Ajouter un juré</a>
 
         <table class="table table-bordered">
@@ -27,11 +27,20 @@ require('entity/Jure.class.php');
                 <th scope="col">Portable</th>
                 <th scope="col">Adresse Mail</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
             <?php
+            if(count($jures)<1){
+                echo (' <tr>
+                <td colspan="7" class="text-center"><h4>Les jurés se sont échappés...</h4></td>
+
+                </tr>');
+                
+            }
             foreach($jures as $jure){
+                
                 //utilise le tb comme un tb normal
                 echo(' <tr>
                 <td>'.$jure->getNom().'</td>
@@ -41,9 +50,20 @@ require('entity/Jure.class.php');
                 <td>'.$jure->getPortable_perso().'</td>
                 <td>'.$jure->getMail_perso().'</td>
                 <td>
-                    <a class="btn btn-outline-success" href="#" role="button">Modifier</a>
+                    <form action="index.php?action=confirm&url=deleteJure&back=listejure" method="post">
+                        <input type="hidden" name="ID_Jure" value="'.$jure->getID_Jure().'">
+                        <input type="hidden" name="action" value="deleteJure">
+                        <button type="submit" class="btn btn-outline-danger" name="deleteJure">TUER</button>
+                    </form>
                 </td>
-                </tr>');
+                <td>
+                <form action="index.php?action=confirm&url=updateJure&back=listejure" method="post">
+                    <input type="hidden" name="ID_Jure" value="'.$jure->getID_Jure().'">
+                    <input type="hidden" name="action" value="updateJure">
+                    <button type="submit" class="btn btn-outline-warning" name="updateJure">Cyborger</button>
+                </form>
+            </td>
+                    </tr>');
             }
 
             ?>

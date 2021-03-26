@@ -18,6 +18,15 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md">
+            <?php
+            if(isset($_SESSION['Erreur'])){ ?>
+                <div class="alert alert-warning" role="alert">
+                <?php echo $_SESSION['Erreur'] ?>
+            </div>
+            <?php 
+                unset($_SESSION['Erreur']);
+            }
+            ?>
                 <table class="table table-borderless">
                     <thead>
                         <tr>
@@ -199,9 +208,9 @@
                 <tbody>
                 <tr>
                 <td>
-                    <select class="form-control form-control-lg">
+                    <select class="form-control form-control-lg" name="ID_en" id="ID_en">
                     <?php foreach($ens as $en){
-                    echo ('<option>'.$en->getNom_en().'</option>');
+                    echo ('<option value="'.$en->getID_en().'">'.$en->getNom_en().'</option>');
                     }?>
                     </select>
                 </td>
@@ -217,13 +226,11 @@
                     </td>
                 </tr>
                 <tr>
-                <td>
-                    <input type="hidden" name="action" value="<?php echo $action ?>">
-                </td>
-                </tr>
-                <tr>
                     <td>
-                        <button type="submit" name="add" value="add" class="btn btn-outline-success">Validez</button>
+                        <button type="submit" name="action" value="add" class="btn btn-outline-success">Validez</button>
+                    </td>
+                    <td>
+                        <button type="submit" name="action" value="update" class="btn btn-outline-Warning">Cyborgez</button>
                     </td>
                 </tr>
                         

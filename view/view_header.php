@@ -22,24 +22,31 @@
                 
                 <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
             </li>
+            <li>
                 <a class="nav-link" href="#">
                     <i class="fa fa-envelope-o" aria-hidden="true"></i>
                     contact-Aide
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
+            <li>
                 <a class="nav-link" href="#">Session en cours<span class="sr-only">(current)</span></a>
             </li>
+            <li>
                 <a class="nav-link" href="#">Archives<span class="sr-only">(current)</span></a>
             </li>
+            <li>
                 <a class="nav-link" href="#">Résultats<span class="sr-only">(current)</span></a>
             </li>
+            <li>
                 <a class="nav-link" href="#">Historique<span class="sr-only">(current)</span></a>
             </li>
-            </li>
+            <li>
                 <a class="nav-link" href="index.php?action=listejure">Jurés<span class="sr-only">(current)</span></a>
             </li>
-
+            <li>
+                <a class="nav-link" href="index.php?action=listeentreprise">Entreprises<span class="sr-only">(current)</span></a>
+            </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

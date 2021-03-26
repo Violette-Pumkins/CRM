@@ -1,7 +1,18 @@
 
+
+    
     <div class="container-xl">
         <div class="row">
             <div class="col-md">
+            <?php
+            if(isset($_SESSION['Erreur'])){ ?>
+                <div class="alert alert-warning" role="alert">
+                <?php echo $_SESSION['Erreur'] ?>
+            </div>
+            <?php 
+                unset($_SESSION['Erreur']);
+            }
+            ?>
                 <table class="table table-borderless">
                     <thead>
                         <tr>
@@ -10,7 +21,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <form action="index.php?action=addEn" method="post">
+                    <form action="index.php?action=addEn" method="POST">
                             <tr>
                             
                                 <div class="input-group has-validation">
@@ -26,9 +37,10 @@
                                     
                                 }
                                 ?>" name="Nom_en" id="inputnom_en"  value="<?php
-                                if(isset($_POST['Nom_en'])){
+                                if (isset($_POST['Nom_en'])) {
                                     echo $_POST['Nom_en'];
-                                }?>" required>
+                                }
+                                ?>" required>
                                     <div class="invalid-feedback">
                                         Le nom d'entreprise n'est pas correct.
                                     </div>
@@ -63,10 +75,10 @@
                         <tr>
                             
                             <div class="input-group has-validation">
-                                <td><label for="tel_en">Téléphone entreprise:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['tel_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['tel_en'])or !ControllerEntreprise::validateNumber($_POST['tel_en'])){
+                                <td><label for="Tel_en">Téléphone entreprise:</label></td>
+                            <td> <input type="Text" class="form-control <?php
+                            if(isset($_POST['Tel_en'])){
+                                if(!ControllerEntreprise::validateField($_POST['Tel_en'])or !ControllerEntreprise::validateNumber($_POST['Tel_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -74,9 +86,9 @@
                                 }
                                 
                             }
-                            ?>" name="tel_en" id="inputtel_en"  value="<?php
-                            if(isset($_POST['tel_en'])){
-                                echo $_POST['tel_en'];
+                            ?>" name="Tel_en" id="inputTel_en"  value="<?php
+                            if(isset($_POST['Tel_en'])){
+                                echo $_POST['Tel_en'];
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -88,10 +100,10 @@
                         <tr>
                             
                             <div class="input-group has-validation">
-                                <td><label for="port_en">Portable entreprise:</label></td>
+                                <td><label for="Port_en">Portable entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['port_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['port_en'])or !ControllerEntreprise::validateNumber($_POST['port_en'])){
+                            if(isset($_POST['Port_en'])){
+                                if(!ControllerEntreprise::validateField($_POST['Port_en'])or !ControllerEntreprise::validateNumber($_POST['Port_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -99,9 +111,9 @@
                                 }
                                 
                             }
-                            ?>" name="port_en" id="inputport_en"  value="<?php
-                            if(isset($_POST['port_en'])){
-                                echo $_POST['port_en'];
+                            ?>" name="Port_en" id="inputPort_en"  value="<?php
+                            if(isset($_POST['Port_en'])){
+                                echo $_POST['Port_en'];
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -113,10 +125,10 @@
                         <tr>
                             
                             <div class="input-group has-validation">
-                                <td><label for="mail_en">Mail entreprise:</label></td>
+                                <td><label for="Mail_en">Mail entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
-                            if(isset($_POST['mail_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['mail_en'])){
+                            if(isset($_POST['Mail_en'])){
+                                if(!ControllerEntreprise::validateField($_POST['Mail_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -124,9 +136,9 @@
                                 }
                                 
                             }
-                            ?>" name="mail_en" id="inputmail_en"  value="<?php
-                            if(isset($_POST['mail_en'])){
-                                echo $_POST['mail_en'];
+                            ?>" name="Mail_en" id="inputmail_en"  value="<?php
+                            if(isset($_POST['Mail_en'])){
+                                echo $_POST['Mail_en'];
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -144,10 +156,11 @@
                                     <button type="submit" name="add" value="add" class="btn btn-outline-success">Validez</button>
                                 </td>
                             </tr>
-                        </form>
+                        
                     </tbody>
                 </table>
             </div>
+            
         </div>
-
+        </form>
     </div>

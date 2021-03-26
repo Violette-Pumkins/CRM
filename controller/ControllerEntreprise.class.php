@@ -17,7 +17,6 @@ class ControllerEntreprise{
                 $res->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'jure', ['ID_Jure', 'Nom', 'Prenom', 'Adresse_perso', 'Tel_perso', 'Portable_perso', 'Mail_perso', 'Visible_sur_VALCE', 'Visible_sur_CERES', 'id_entreprise']);
                 break;
             }
-
             $records=$res->fetchAll();
             // var_dump($records);
             $res->closeCursor();
@@ -25,7 +24,7 @@ class ControllerEntreprise{
 
 
         }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD</h1>'. $e->getMessage());
+            die('<h1>Erreur lecture en BDD-afficherlisteentreprise</h1>'. $e->getMessage());
         }
         return $records;
     }
@@ -72,15 +71,14 @@ class ControllerEntreprise{
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
             $res->execute(array(':nom_en'=>$nom, ':adresse_en'=>$adresse, ':tel_en'=>$tel, ':port_en'=>$port, ':mail_en'=>$mail));
-
-            $records=$res->fetchAll();
             $res->closeCursor();
             BDCRM::disconnect();
+            return true;
 
         }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD</h1>'. $e->getMessage());
+            die('<h1>Erreur lecture en BDD-addentreprise</h1>'. $e->getMessage());
         }
-        return $records;
+        return false;
     }
 
     public static function checkentreprise(string $nom, string $adresse, string $tel, string  $port, string $mail):bool
@@ -101,13 +99,52 @@ class ControllerEntreprise{
             $codereturn=count($records)>0;
 
         }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD</h1>'. $e->getMessage());
+            die('<h1>Erreur lecture en BDD-checkentreprise</h1>'. $e->getMessage());
         }
 
 
             return $codereturn; 
     
         
+    }
+    public static function checkJureOk($ID_en)
+    {
+        $sql= ('SELECT j.ID_Jure, e.id_entreprise FROM jure j JOIN entreprise e ON e.id_entreprise = j.id_entreprise WHERE e.id_entreprise LIKE :ID_en');
+        try{
+            $co=BDCRM::getConnexion();
+            $res=$co->prepare($sql);
+            $res->execute(array(':ID_en'=>$ID_en));
+            $res->closeCursor();
+            BDCRM::disconnect();
+            return true;
+
+        }catch(PDOException $e){
+            die('<h1>Erreur lecture en BDD-deleteJure</h1>'. $e->getMessage());
+        }
+        return false;
+    }
+
+
+    public static function deleteEntreprise(string $ID_en)
+    {
+
+        if(ControllerEntreprise::checkJureOk($ID_en)){
+        $sql= ('DELETE FROM jure WHERE ID_Jure LIKE :ID_Jure');
+        try{
+            $co=BDCRM::getConnexion();
+            $res=$co->prepare($sql);
+            $res->execute(array(':ID_en'=>$ID_en));
+            $res->closeCursor();
+            BDCRM::disconnect();
+            return true;
+
+        }catch(PDOException $e){
+            die('<h1>Erreur lecture en BDD-deleteJure</h1>'. $e->getMessage());
+        }
+    } else{
+        $_SESSION['Erreur']="La suppression à été problématique";
+        }
+        return false;
     }
 
 
