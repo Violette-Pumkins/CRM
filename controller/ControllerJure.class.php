@@ -83,7 +83,7 @@ class Controllerjure{
             return true;
         }
     }
-    
+    //TODO a checker validateFieald
     public static function validateTest(string $field): bool
     {
         if(strcmp("test", $field) !== 0){

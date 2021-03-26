@@ -1,4 +1,30 @@
+<?php
+$nom=NULL;
+$ID_en=NULL;
+$adresse=NULL;
+$tel=NULL;
+$port=NULL;
+$mail=NULL;
 
+
+    if(isset($_SESSION['entreprise'])){
+        $entreprise=$_SESSION['entreprise'];
+        // var_dump($entreprise);
+        $nom=$entreprise['Nom_entreprise'];
+        $ID_en=$entreprise['id_entreprise'];
+        $adresse=$entreprise['Adresse_entreprise'];
+        $tel=$entreprise['Tel_entreprise'];
+        $port=$entreprise['Port_entreprise'];
+        $mail=$entreprise['Mail_entreprise'];
+    }
+    if (isset($_POST['Nom_en'])) {
+        $nom= $_POST['Nom_en'];
+    }   
+
+
+
+    
+?>
 
     
     <div class="container-xl">
@@ -21,7 +47,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <form action="index.php?action=addEn" method="POST">
+                    
+                    
+                    <?php
+                    if (isset($_SESSION['entreprise'])) {
+                        echo '<form action="index.php?action=updateEntreprise"';
+                    }
+                    else{
+                        echo '<form action="index.php?action=addEn"';
+                    }
+                        ?>
+                    method="POST">
+                    <?php
+                    if (isset($_SESSION['entreprise'])) {
+                        echo ' <input type="hidden" name="ID_en" value="'.$ID_en.'">';
+                    }
+                        ?>
                             <tr>
                             
                                 <div class="input-group has-validation">
@@ -37,10 +78,12 @@
                                     
                                 }
                                 ?>" name="Nom_en" id="inputnom_en"  value="<?php
-                                if (isset($_POST['Nom_en'])) {
-                                    echo $_POST['Nom_en'];
+                                if (isset($nom)) {
+                                    echo $nom;
                                 }
-                                ?>" required>
+                                
+                                
+                                ?> " required>
                                     <div class="invalid-feedback">
                                         Le nom d'entreprise n'est pas correct.
                                     </div>
@@ -62,8 +105,8 @@
                                 
                             }
                             ?>" name="Adresse_en" id="inputAdresse_en"  value="<?php
-                            if(isset($_POST['Adresse_en'])){
-                                echo $_POST['Adresse_en'];
+                            if(isset($adresse)){
+                                echo $adresse;
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -87,8 +130,8 @@
                                 
                             }
                             ?>" name="Tel_en" id="inputTel_en"  value="<?php
-                            if(isset($_POST['Tel_en'])){
-                                echo $_POST['Tel_en'];
+                            if(isset($tel)){
+                                echo $tel;
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -112,8 +155,8 @@
                                 
                             }
                             ?>" name="Port_en" id="inputPort_en"  value="<?php
-                            if(isset($_POST['Port_en'])){
-                                echo $_POST['Port_en'];
+                            if(isset($port)){
+                                echo $port;
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -137,8 +180,8 @@
                                 
                             }
                             ?>" name="Mail_en" id="inputmail_en"  value="<?php
-                            if(isset($_POST['Mail_en'])){
-                                echo $_POST['Mail_en'];
+                            if(isset($mail)){
+                                echo $mail;
                             }
                             ?>" required>
                                 <div class="invalid-feedback">
@@ -154,6 +197,9 @@
                             <tr>
                                 <td>
                                     <button type="submit" name="add" value="add" class="btn btn-outline-success">Validez</button>
+                                </td>
+                                <td>
+                                <input type="hidden" name="action" value="updateEntreprise">
                                 </td>
                             </tr>
                         

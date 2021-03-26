@@ -217,7 +217,7 @@
                 </tr>
                 <tr>
                 <td>
-                <a href="index.php?action=addEn" class="btn btn-outline-success" role="button" aria-pressed="true">Ajoutez une entreprise liée</a>
+                <a href="index.php?action=addEn" class="btn btn-outline-success" role="button" aria-pressed="true">Ajoutez une entreprise</a>
                 </td>
                 </tr>
                 <tr>
@@ -228,9 +228,6 @@
                 <tr>
                     <td>
                         <button type="submit" name="action" value="add" class="btn btn-outline-success">Validez</button>
-                    </td>
-                    <td>
-                        <button type="submit" name="action" value="update" class="btn btn-outline-Warning">Cyborgez</button>
                     </td>
                 </tr>
                         

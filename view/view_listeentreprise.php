@@ -32,6 +32,7 @@ require('entity/Entreprise.class.php');
                 <th scope="col">Portable</th>
                 <th scope="col">Adresse Mail</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -53,11 +54,14 @@ require('entity/Entreprise.class.php');
                 <td>'.$en->getPort_en().'</td>
                 <td>'.$en->getMail_en().'</td>
                 <td>
-                    <form action="index.php?action=confirm&url=deleteJure&back=listejure" method="post">
+                    <form action="index.php?action=confirm&url=deleteEntreprise&back=listeentreprise" method="post">
                         <input type="hidden" name="ID_en" value="'.$en->getID_en().'">
                         <input type="hidden" name="action" value="deleteEntreprise">
                         <button type="submit" class="btn btn-outline-danger" name="deleteEntreprise">Supprimer</button>
                     </form>
+                </td>
+                <td> 
+                    <a class="btn btn-outline-warning update" href="index.php?action=updateEntreprise&ID_en='.$en->getId_en().'" role="button">Cyborger</a>
                 </td>
                     </tr>');
             }

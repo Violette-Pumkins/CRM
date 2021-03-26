@@ -59,7 +59,9 @@ function Route($action)
             // var_dump($ID_en);
 
             //verifie l'existence des variables mais pas la véracité
-            if ((isset($nomj) and isset($prenomj) and isset($adressej) and isset($telj) and isset($portj) and isset($mailj) and isset($vv) and isset($vc) and isset($ID_en)) 
+            if ((isset($nomj) and isset($prenomj) and isset($adressej) and isset($telj) and isset($portj) and isset($mailj) and isset($vv) and isset($vc) and isset($ID_en) and 
+            ControllerJure::validateNumber($telj) and ControllerJure::validateNumber($portj)and ControllerJure::validateField($nomj) and
+            ControllerJure::validateField($prenomj)) 
             // and ControllerJure::checkJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc)
             ) {
                 ControllerJure::addJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc, $ID_en);
@@ -102,10 +104,10 @@ function Route($action)
     
                 $coderetour = ControllerEntreprise::addEntreprise($nome, $adressee, $tele, $porte, $maile);
                 if ($coderetour) {
-                    header('Location: index.php?action=listejure');
+                    header('Location: index.php?action=listeentreprise');
                     // TODO : : penser a changer URL.
                     exit();
-                    $_SESSION['Sucess']="L'ajout à été réussit";
+                    $_SESSION['Success']="L'ajout à été réussit";
                     // Route('listejure');
                     break;
                 }
@@ -146,14 +148,84 @@ function Route($action)
 
         case 'deleteEntreprise':
             // var_dump($_POST);
-            if(isset($_POST['ID_Entreprise'])){
-                $ID = $_POST['ID_Entreprise'];
-                $coderetour = ControllerEntreprise::deleteEntreprise($ID);
+            if(isset($_POST['ID_en'])
+            ){
+                $ID_en = $_POST['ID_en'];
+                $coderetour = ControllerEntreprise::deleteEntreprise($ID_en);
             }
                 header('Location: index.php?action=listeentreprise');
                 // TODO : : penser a changer URL.
                 exit();
             break;
+        case 'updateEntreprise':
+                $ID_en = isset($_GET['ID_en']) ? $_GET['ID_en'] : NULL;
+                // var_dump($ID_en);
+                // var_dump($_GET);
+            //verifie l'existence des variables mais pas la véracité
+            $entreprise=ControllerEntreprise::getEntrepriseById($ID_en);
+            var_dump($entreprise);
+            if ( isset($entreprise) and count($entreprise)>0 )
+            {
+                var_dump("hello!");
+                $_SESSION['entreprise']=$entreprise[0];
+                require('view/view_header.php');
+                require('view/forms/view_form_en.php');
+                require('view/view_footer.php');
+                // $coderetour = ControllerEntreprise::updateEntreprise($ID_en, $nome, $adressee, $tele, $porte, $maile);
+                // if ($coderetour) {
+                //     header('Location: index.php?action=listeentreprise');
+                //     // TODO : : penser a changer URL.
+                //     exit();
+                //     $_SESSION['Success']="Le cyborgage à été réussit";
+                //     // Route('listejure');
+                //     break;
+                // }
+                // else{
+                //     $_SESSION['Erreur']="Le cyborgage à été problématique";
+                //     // TODO: changer le msg
+                // }
+            }
+            else{
+                $ID_en=isset($_POST['ID_en']) ? $_POST['ID_en'] : NULL;
+                echo($ID_en);
+                $nome = isset($_POST['Nom_en']) ? $_POST['Nom_en'] : NULL;
+                // var_dump(isset($nome));
+                echo ($nome);
+                $adressee = isset($_POST['Adresse_en']) ? $_POST['Adresse_en'] : NULL;
+                // var_dump(isset($adressee));
+                echo ($adressee);
+                $tele = isset($_POST['Tel_en']) ? $_POST['Tel_en'] : NULL;
+                // var_dump(isset($tele));
+                echo ($tele);
+                $porte = isset($_POST['Port_en']) ? $_POST['Port_en'] : NULL;
+                // var_dump(isset($porte));
+                echo ($porte);
+                $maile = isset($_POST['Mail_en']) ? $_POST['Mail_en'] : NULL;
+                // var_dump(isset($maile));
+                echo ($maile);
+                //verifie l'existence des variables mais pas la véracité
+                if ((isset($ID_en) and isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
+                ) {
+                    // var_dump("hello!");
+        
+                    $coderetour = ControllerEntreprise::updateEntreprise($ID_en, $nome, $adressee, $tele, $porte, $maile);
+                    if ($coderetour) {
+                        unset($_SESSION['entreprise']);
+                        header('Location: index.php?action=listeentreprise');
+                        // TODO : : penser a changer URL.
+                        exit();
+                        $_SESSION['Success']="L'ajout à été réussit";
+                        // Route('listejure');
+                        break;
+                    }
+                    else{
+                        $_SESSION['Erreur']="L'ajout à été problématique";
+                        // TODO: changer le msg
+                    }
+                }
+                header('Location: index.php?action=listeentreprise');
+                exit();
+            }
 }
 
 }

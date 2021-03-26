@@ -60,7 +60,7 @@ require('entity/Jure.class.php');
                 <form action="index.php?action=confirm&url=updateJure&back=listejure" method="post">
                     <input type="hidden" name="ID_Jure" value="'.$jure->getID_Jure().'">
                     <input type="hidden" name="action" value="updateJure">
-                    <button type="submit" class="btn btn-outline-warning" name="updateJure">Cyborger</button>
+                    <a class="btn btn-outline-success update" href="index.php?action=updatejure" role="button">Cyborger</a>
                 </form>
             </td>
                     </tr>');
