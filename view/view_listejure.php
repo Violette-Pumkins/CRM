@@ -56,13 +56,9 @@ require('entity/Jure.class.php');
                         <button type="submit" class="btn btn-outline-danger" name="deleteJure">TUER</button>
                     </form>
                 </td>
-                <td>
-                <form action="index.php?action=confirm&url=updateJure&back=listejure" method="post">
-                    <input type="hidden" name="ID_Jure" value="'.$jure->getID_Jure().'">
-                    <input type="hidden" name="action" value="updateJure">
-                    <a class="btn btn-outline-success update" href="index.php?action=updatejure" role="button">Cyborger</a>
-                </form>
-            </td>
+                <td> 
+                <a class="btn btn-outline-warning update" href="index.php?action=updateJure&ID_Jure='.$jure->getId_Jure().'" role="button">Cyborger</a>
+                </td>
                     </tr>');
             }
 

@@ -192,14 +192,14 @@ class ControllerEntreprise{
     {
         $sql= 'UPDATE `entreprise` SET `Nom_entreprise`= :nom_en,`Adresse_entreprise`= :adresse_en,`Tel_entreprise`= :tel_en,`Port_entreprise`= :port_en,`Mail_entreprise`= :mail_en WHERE id_entreprise LIKE :ID_en';
         try{
-            var_dump("hello");
+            // var_dump("hello");
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
-            var_dump("hello");
+            // var_dump("billy");
             $res->execute(array(':nom_en'=>$nom_en, ':adresse_en'=>$adresse_en, ':tel_en'=>$tel_en, ':port_en'=>$port_en,':mail_en'=>$mail_en, ':ID_en'=>$ID_en ));
             $res->closeCursor();
             BDCRM::disconnect();
-            var_dump("goodbye");
+            // var_dump("goodbye");
             return true;
 
         }catch(PDOException $e){

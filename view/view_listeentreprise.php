@@ -2,9 +2,6 @@
 
 <?php
 require('entity/Entreprise.class.php');
-
-    $r=ControllerEntreprise::afficherListeEntreprise();
-    
     // créer un tb vide
     $r=ControllerEntreprise::afficherListeEntreprise();
     

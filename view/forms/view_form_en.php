@@ -19,7 +19,20 @@ $mail=NULL;
     }
     if (isset($_POST['Nom_en'])) {
         $nom= $_POST['Nom_en'];
-    }   
+    }
+    if (isset($_POST['Adresse_entreprise'])) {
+        $nom= $_POST['Adresse_entreprise'];
+    }
+    if (isset($_POST['Tel_entreprise'])) {
+        $nom= $_POST['Tel_entreprise'];
+    }
+    if (isset($_POST['Port_entreprise'])) {
+        $nom= $_POST['Port_entreprise'];
+    }
+    if (isset($_POST['Mail_entreprise'])) {
+        $nom= $_POST['Mail_entreprise'];
+    }
+    
 
 
 
@@ -69,7 +82,7 @@ $mail=NULL;
                                     <td><label for="Nom_en">Nom entreprise:</label></td>
                                 <td> <input type="text" class="form-control <?php
                                 if(isset($_POST['Nom_en'])){
-                                    if(!ControllerEntreprise::validateField($_POST['Nom_en']) ){
+                                    if(ControllerEntreprise::validateField($_POST['Nom_en']) ){
                                         echo "is-invalid";
                                     }
                                     else{
@@ -96,7 +109,7 @@ $mail=NULL;
                                 <td><label for="Adresse_en">Adresse entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
                             if(isset($_POST['Adresse_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['Adresse_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Adresse_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -121,7 +134,7 @@ $mail=NULL;
                                 <td><label for="Tel_en">Téléphone entreprise:</label></td>
                             <td> <input type="Text" class="form-control <?php
                             if(isset($_POST['Tel_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['Tel_en'])or !ControllerEntreprise::validateNumber($_POST['Tel_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Tel_en'])or !ControllerEntreprise::validateNumber($_POST['Tel_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -146,7 +159,7 @@ $mail=NULL;
                                 <td><label for="Port_en">Portable entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
                             if(isset($_POST['Port_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['Port_en'])or !ControllerEntreprise::validateNumber($_POST['Port_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Port_en'])or !ControllerEntreprise::validateNumber($_POST['Port_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -171,7 +184,7 @@ $mail=NULL;
                                 <td><label for="Mail_en">Mail entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
                             if(isset($_POST['Mail_en'])){
-                                if(!ControllerEntreprise::validateField($_POST['Mail_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Mail_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
