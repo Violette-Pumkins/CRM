@@ -72,8 +72,9 @@ class Controllerjure{
 
     public static function validateField(string $field): bool
     { 
-        $pattern='[^&;$%@:;*()\`\][\}{#~?><>|=_+]';
-        if( preg_match($pattern, $field)){
+        $pattern='[^&;$%:;*()\`\][\}{#~?><>|=_+]';
+        preg_match($pattern, $field, $matches);
+        if($matches>0){
             return false;
         }
         else{

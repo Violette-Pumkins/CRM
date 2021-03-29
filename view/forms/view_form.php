@@ -199,6 +199,7 @@ if (isset($_SESSION['jure'])) {
                                                                     if (isset($port)) {
                                                                         echo $port;
                                                                     }
+                                                                    
                                                                     ?>" required>
                                 <div class="invalid-feedback">
                                     Votre numéro de portable n'est pas correct.

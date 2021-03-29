@@ -58,7 +58,7 @@ require('entity/Entreprise.class.php');
                     </form>
                 </td>
                 <td> 
-                    <a class="btn btn-outline-warning update" href="index.php?action=updateEntreprise&ID_en='.$en->getId_en().'" role="button">Cyborger</a>
+                    <a class="btn btn-outline-warning update" href="index.php?action=updateEntreprise&ID_en='.$en->getId_en().'" role="button">Modifier</a>
                 </td>
                     </tr>');
             }
