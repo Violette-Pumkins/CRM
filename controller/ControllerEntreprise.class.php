@@ -117,7 +117,8 @@ class ControllerEntreprise{
             $records=$res->fetchAll();
             $res->closeCursor();
             BDCRM::disconnect();
-            var_dump($records);
+            // var_dump($records);
+
             return isset($records) and (count($records)>0);
 
         }catch(PDOException $e){
@@ -169,14 +170,14 @@ class ControllerEntreprise{
             $sql= ('DELETE FROM `entreprise` WHERE id_entreprise LIKE :ID_en');
             
             try{
-                var_dump("hello");
+                // var_dump("hello");
                 $co=BDCRM::getConnexion();
                 $res=$co->prepare($sql);
-                var_dump("suppression");
+                // var_dump("suppression");
                 $res->execute(array(':ID_en'=>$ID_en));
                 $res->closeCursor();
                 BDCRM::disconnect();
-                var_dump("goodbye");
+                // var_dump("goodbye");
                 return true;
 
             }catch(PDOException $e){

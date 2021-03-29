@@ -18,8 +18,6 @@ if (isset($_GET['action'])) {
 
 
 //effets des actions (traitements)
-function Route($action)
-{
     switch ($action) {
         case 'accueil':
             require('view/view_header.php');
@@ -62,7 +60,7 @@ function Route($action)
             //verifie l'existence des variables mais pas la véracité
             if ((isset($nomj) and isset($prenomj) and isset($adressej) and isset($telj) and isset($portj) and isset($mailj) and isset($vv) and isset($vc) and isset($ID_en) and 
             ControllerJure::validateNumber($telj) and ControllerJure::validateNumber($portj)and ControllerJure::validateField($nomj) and
-            ControllerJure::validateField($prenomj) and ControllerJure::checkEmptyJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc) and !ControllerJure::checkjure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $ID_en))
+            ControllerJure::validateField($prenomj) and ControllerJure::checkEmptyJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc) and !ControllerJure::checkjure($nomj, $prenomj, $adressej, $telj, $portj, $mailj))
             ) {
                 ControllerJure::addJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc, $ID_en);
                 header('Location: index.php?action=listejure');
@@ -273,7 +271,3 @@ function Route($action)
                 exit();
             }
 }
-
-}
-
-Route($action);
