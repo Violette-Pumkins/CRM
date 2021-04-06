@@ -37,7 +37,7 @@ class Controllerjure{
      */
     public static function addJure( string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj, bool $vv, bool $vc, string $ID_en)
     {
-        if(ControllerJure::checkentrepriseID($ID_en))
+        if(!ControllerJure::validatemail($mailj))
         {
             //create request insert entreprise et insert juré
             $sql= 'INSERT INTO `jure`(`Nom`, `Prenom`, `Adresse_perso`, `Tel_perso`, `Portable_perso`, `Mail_perso`, `Visible_sur_VALCE`, `Visible_sur_CERES`, `id_entreprise`) VALUES (:nom, :prenom, :adresse, :tel, :port, :mail, :vv, :vc, :id_en)';
@@ -65,30 +65,30 @@ class Controllerjure{
             }
         }
         else{
-            $_SESSION['Erreur']="entreprise invalide";
+            $_SESSION['Erreur']="Juré invalide";
         }   
         return false;
     }
-
-    public static function validateField(string $field): bool
-    { 
-        $pattern='[^&;$%:;*()\`\][\}{#~?><>|=_+]';
-        preg_match($pattern, $field, $matches);
-        if($matches>0){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    public static function validateTest(string $field): bool
+    public function validatemail($field)
     {
-        if(strcmp("test", $field) !== 0){
-            return false;
+        $codereturn=false;
+        
+        $sql='SELECT * FROM jure WHERE Mail_perso LIKE :mail'; 
+        try{
+            $co=BDCRM::getConnexion();
+            $res=$co->prepare($sql);
+            $res->execute(array(':mail'=>$field));
+
+            $records=$res->fetchAll();
+            $res->closeCursor();
+            BDCRM::disconnect();
+
+            $codereturn=count($records)>0;
+
+        }catch(PDOException $e){
+            die('<h1>Erreur lecture en BDD-checkentreprise</h1>'. $e->getMessage());
         }
-        else{
-            return true;
-        }
+            return $codereturn; 
     }
 
     public static function checkEmptyJure(string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj, bool $vv, bool $vc) :bool
@@ -99,32 +99,6 @@ class Controllerjure{
         else{
             return false;
         }
-    }
-    public static function checkjure(string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj):bool
-    {
-        $codereturn=false;
-        
-        $sql='SELECT * FROM jure WHERE Nom LIKE :nom  AND Prenom LIKE :prenom AND Adresse_perso LIKE :adresse AND Tel_perso LIKE :tel AND Portable_perso LIKE :port AND Mail_perso LIKE :mail'; 
-        
-        try{
-            $co=BDCRM::getConnexion();
-            $res=$co->prepare($sql);
-            $res->execute(array(':nom'=>$nomj,':prenom'=>$prenomj, ':adresse'=>$adressej, ':tel'=>$telj, ':port'=>$portj, ':mail'=>$mailj));
-
-            $records=$res->fetchAll();
-            $res->closeCursor();
-            BDCRM::disconnect();
-
-            $codereturn=count($records)>0;
-
-        }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD-checkJure</h1>'. $e->getMessage());
-        }
-
-
-            return $codereturn; 
-    
-        
     }
     public static function validateNumber(string $field) :bool
     {

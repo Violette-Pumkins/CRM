@@ -95,15 +95,7 @@ if (isset($_SESSION['jure'])) {
 
                         <div class="input-group has-validation">
                             <td><label for="nom">Nom:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                                                                        if (isset($_POST['nom'])) {
-                                                                            if (!ControllerJure::validateField($_POST['nom'])) {
-                                                                                echo "is-invalid";
-                                                                            } else {
-                                                                                echo "is-valid";
-                                                                            }
-                                                                        }
-                                                                        ?>" name="nom" id="inputnom" value="<?php
+                            <td> <input type="text" class="form-control" name="nom" id="inputnom" value="<?php
                                                                     if (isset($nom)) {
                                                                         echo $nom;
                                                                     }
@@ -118,15 +110,7 @@ if (isset($_SESSION['jure'])) {
 
                         <div class="input-group has-validation">
                             <td><label for="prenom">Prénom:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                                                                        if (isset($_POST['prenom'])) {
-                                                                            if (!ControllerJure::validateField($_POST['prenom'])) {
-                                                                                echo "is-invalid";
-                                                                            } else {
-                                                                                echo "is-valid";
-                                                                            }
-                                                                        }
-                                                                        ?>" name="prenom" id="inputprenom" value="<?php
+                            <td> <input type="text" class="form-control" name="prenom" id="inputprenom" value="<?php
                                                                             if (isset($prenom)) {
                                                                                 echo $prenom;
                                                                             }
@@ -141,15 +125,7 @@ if (isset($_SESSION['jure'])) {
 
                         <div class="input-group has-validation">
                             <td><label for="adresse">Adresse:</label></td>
-                            <td> <input type="text" class="form-control <?php
-                                                                        if (isset($_POST['adresse'])) {
-                                                                            if (ControllerJure::validateField($_POST['adresse'])) {
-                                                                                echo "is-invalid";
-                                                                            } else {
-                                                                                echo "is-valid";
-                                                                            }
-                                                                        }
-                                                                        ?>" name="adresse" id="inputadresse" value="<?php
+                            <td> <input type="text" class="form-control" name="adresse" id="inputadresse" value="<?php
                                                                         if (isset($adresse)) {
                                                                             echo $adresse;
                                                                         }
@@ -166,7 +142,7 @@ if (isset($_SESSION['jure'])) {
                             <td><label for="tel">Téléphone:</label></td>
                             <td> <input type="text" class="form-control <?php
                                                                         if (isset($_POST['tel'])) {
-                                                                            if (ControllerJure::validateField($_POST['tel']) or !ControllerJure::validateNumber($_POST['tel'])) {
+                                                                            if (!ControllerJure::validateNumber($_POST['tel'])) {
                                                                                 echo "is-invalid";
                                                                             } else {
                                                                                 echo "is-valid";
@@ -189,7 +165,7 @@ if (isset($_SESSION['jure'])) {
                             <td><label for="port">Portable:</label></td>
                             <td> <input type="text" class="form-control <?php
                                                                         if (isset($_POST['port'])) {
-                                                                            if (ControllerJure::validateField($_POST['port']) or !ControllerJure::validateNumber($_POST['port'])) {
+                                                                            if (!ControllerJure::validateNumber($_POST['port'])) {
                                                                                 echo "is-invalid";
                                                                             } else {
                                                                                 echo "is-valid";
@@ -213,7 +189,7 @@ if (isset($_SESSION['jure'])) {
                             <td><label for="mail">Mail:</label></td>
                             <td> <input type="text" class="form-control <?php
                                                                         if (isset($_POST['mail'])) {
-                                                                            if (ControllerJure::validateField($_POST['mail'])) {
+                                                                            if (ControllerJure::validatemail($_POST['mail'])) {
                                                                                 echo "is-invalid";
                                                                             } else {
                                                                                 echo "is-valid";
