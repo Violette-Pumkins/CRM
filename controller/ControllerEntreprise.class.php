@@ -180,8 +180,9 @@ class ControllerEntreprise{
                 // var_dump("goodbye");
                 return true;
 
-            }catch(PDOException $e){
-                die('<h1>Erreur lecture en BDD-deleteJure</h1>'. $e->getMessage());
+            }
+            catch(PDOException $e){
+                die('<h1>Erreur lecture en BDD-deleteEntreprise</h1>'. $e->getMessage());
             }
 
         } else{

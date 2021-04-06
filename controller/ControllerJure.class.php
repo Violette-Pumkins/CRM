@@ -168,39 +168,22 @@ class Controllerjure{
     
         
     }
-
-    public static function deleteJure(string $IDj)
+    public function checkAnySessionInJure($ID_Jure)
     {
-        $sql= ('DELETE FROM jure WHERE ID_Jure LIKE :ID_Jure');
+        $sql= ('SELECT j.ID_Jure FROM jure j JOIN participe p ON j.ID_Jure = p.ID_Jure WHERE p.ID_Jure LIKE :ID_Jure');
         try{
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
-            $res->execute(array(':ID_Jure'=>$IDj));
+            $res->execute(array( ':ID_Jure'=>$ID_Jure));
+            $records=$res->fetchAll();
             $res->closeCursor();
             BDCRM::disconnect();
-            return true;
+            // var_dump($records);
+
+            return isset($records) and (count($records)>0);
 
         }catch(PDOException $e){
             die('<h1>Erreur lecture en BDD-deleteJure</h1>'. $e->getMessage());
-        }
-        return false;
-    }
-    public static function updateJure( $nom, $prenom, $adresse, $tel, $port, $mail, $vv, $vc, $ID_en, $ID_Jure)
-    {
-        $sql= 'UPDATE `jure` SET `Nom`= :nom,`Prenom`= :prenom,`Adresse_perso`= :adresse,`Tel_perso`= :tel,`Portable_perso`= :port,`Mail_perso`= :mail,`Visible_sur_VALCE`= :vv,`Visible_sur_CERES`= :vc,`id_entreprise`= :ID_en WHERE `ID_Jure` LIKE :ID_Jure';
-        try{
-            // var_dump("hello");
-            $co=BDCRM::getConnexion();
-            $res=$co->prepare($sql);
-            // var_dump("hello");
-            $res->execute(array(':nom'=>$nom, ':prenom'=>$prenom, ':adresse'=>$adresse, ':tel'=>$tel, ':port'=>$port,':mail'=>$mail, ':vv'=>  $vv ? "1" : "0", ':vc'=> $vc ? "1" : "0", ':ID_en'=>$ID_en, ':ID_Jure'=>$ID_Jure ));
-            $res->closeCursor();
-            BDCRM::disconnect();
-            // var_dump("goodbye");
-            return true;
-
-        }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD-updateJure</h1>'. $e->getMessage());
         }
         return false;
     }
@@ -220,6 +203,50 @@ class Controllerjure{
             die('<h1>Erreur lecture en BDD- get jure by id</h1>'. $e->getMessage());
         }
         return NULL;
+    }
+    public static function deleteJure(string $ID_Jure)
+    {
+        $jure=ControllerJure::getJureById($ID_Jure);
+
+        if(isset($jure) and count($jure)>0 and !ControllerJure::checkAnySessionInJure($ID_Jure)){
+
+            $sql= ('DELETE FROM jure WHERE ID_Jure = :ID_Jure');
+            try{
+                $co=BDCRM::getConnexion();
+                $res=$co->prepare($sql);
+                $res->execute(array(':ID_Jure'=>$ID_Jure));
+                $res->closeCursor();
+                BDCRM::disconnect();
+                return true;
+
+            }catch(PDOException $e){
+                
+                die('<h1>Erreur lecture en BDD-deleteJure/session</h1>'. $e->getMessage());
+            }
+        }else{
+            $_SESSION['Erreur']="La suppression à été problématique";
+        }
+            return false;
+        
+    }   
+    public static function updateJure( $nom, $prenom, $adresse, $tel, $port, $mail, $vv, $vc, $ID_en, $ID_Jure)
+    {
+        $sql= 'UPDATE `jure` SET `Nom`= :nom,`Prenom`= :prenom,`Adresse_perso`= :adresse,`Tel_perso`= :tel,`Portable_perso`= :port,`Mail_perso`= :mail,`Visible_sur_VALCE`= :vv,`Visible_sur_CERES`= :vc,`id_entreprise`= :ID_en WHERE `ID_Jure` LIKE :ID_Jure';
+        try{
+            // var_dump("hello");
+            $co=BDCRM::getConnexion();
+            $res=$co->prepare($sql);
+            // var_dump("hello");
+            $res->execute(array(':nom'=>$nom, ':prenom'=>$prenom, ':adresse'=>$adresse, ':tel'=>$tel, ':port'=>$port,':mail'=>$mail, ':vv'=>  $vv ? "1" : "0", ':vc'=> $vc ? "1" : "0", ':ID_en'=>$ID_en, ':ID_Jure'=>$ID_Jure ));
+            $res->closeCursor();
+            BDCRM::disconnect();
+            // var_dump("goodbye");
+            return true;
+
+        }catch(PDOException $e){
+            die('<h1>Erreur lecture en BDD-updateJure</h1>'. $e->getMessage());
+        }
+        return false;
     }
 
 }

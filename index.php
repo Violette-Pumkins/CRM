@@ -146,8 +146,7 @@ if (isset($_GET['action'])) {
 
         case 'deleteEntreprise':
             // var_dump($_POST);
-            if(isset($_POST['ID_en'])
-            ){
+            if(isset($_POST['ID_en'])){
                 $ID_en = $_POST['ID_en'];
                 $coderetour = ControllerEntreprise::deleteEntreprise($ID_en);
             }
