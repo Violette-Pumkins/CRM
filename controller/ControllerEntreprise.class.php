@@ -42,7 +42,8 @@ class ControllerEntreprise{
         return is_numeric($field) and strlen($field)>9 and strlen($field)<12;
     }
     public static function addEntreprise(string $nom, string $adresse, string $tel, string $port, string $mail)
-    { if(!checkentreprise($nom, $adresse)){
+    { 
+        // if(!ControllerEntreprise::checkentreprise($nom, $adresse)){
         $sql= 'INSERT INTO `entreprise`(`Nom_entreprise`, `Adresse_entreprise`, `Tel_entreprise`, `Port_entreprise`, `Mail_entreprise`) VALUES (:nom_en, :adresse_en, :tel_en, :port_en, :mail_en)';
 
         try{
@@ -56,13 +57,13 @@ class ControllerEntreprise{
         }catch(PDOException $e){
             die('<h1>Erreur lecture en BDD-addentreprise</h1>'. $e->getMessage());
         }
-    }else {
-        $_SESSION['Erreur']="Entreprise invalide";
-    } 
+    // }else {
+    //     $_SESSION['Erreur']="Entreprise invalide";
+    // } 
         return false;
     }
 
-    public static function checkentreprise(string $nom, string $mail):bool
+    public static function checkentreprise(string $field):bool
     {
         $codereturn=false;
         
@@ -71,7 +72,7 @@ class ControllerEntreprise{
         try{
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
-            $res->execute(array(':nom_en'=>$nom,':mail_en'=>$mail));
+            $res->execute(array(':nom_en'=>$field,':mail_en'=>$field));
 
             $records=$res->fetchAll();
             $res->closeCursor();

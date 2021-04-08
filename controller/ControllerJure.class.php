@@ -37,8 +37,8 @@ class Controllerjure{
      */
     public static function addJure( string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj, bool $vv, bool $vc, string $ID_en)
     {
-        if(!ControllerJure::validatemail($mailj))
-        {
+        // if(!ControllerJure::validatemail($mailj))
+        // {
             //create request insert entreprise et insert juré
             $sql= 'INSERT INTO `jure`(`Nom`, `Prenom`, `Adresse_perso`, `Tel_perso`, `Portable_perso`, `Mail_perso`, `Visible_sur_VALCE`, `Visible_sur_CERES`, `id_entreprise`) VALUES (:nom, :prenom, :adresse, :tel, :port, :mail, :vv, :vc, :id_en)';
             try{
@@ -63,10 +63,10 @@ class Controllerjure{
             }catch(PDOException $e){
                 die('<h1>Erreur lecture en BDD-addJure</h1>'. $e->getMessage());
             }
-        }
-        else{
-            $_SESSION['Erreur']="Juré invalide";
-        }   
+        // }
+        // else{
+        //     $_SESSION['Erreur']="Juré invalide";
+        // }   
         return false;
     }
     public function validatemail($field)

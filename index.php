@@ -77,6 +77,7 @@ if (isset($_GET['action'])) {
     
         case 'addEn':
             if ($_GET['action'] = 'addEn') {
+                $_SESSION['entreprise'];
     
                 $nome = isset($_POST['Nom_en']) ? $_POST['Nom_en'] : NULL;
                 // var_dump(isset($nome));
@@ -245,7 +246,7 @@ if (isset($_GET['action'])) {
                 $ID_en = isset($_POST['ID_en']) ? $_POST['ID_en'] : null;
                 // var_dump(isset($ID_en) );
                 // verifie l'existence des variables mais pas la véracité
-                if ((isset($ID_Jure) and isset($nom) and isset($prenom) and isset($adresse) and isset($tel) and isset($port) and isset($mail) and isset($vv) and isset($vc) and isset($ID_en)) and ControllerJure::checkEmpty($nom, $prenom, $adresse, $tel, $port, $mail) and ControllerJure::validateField($prenom)
+                if ((isset($ID_Jure) and isset($nom) and isset($prenom) and isset($adresse) and isset($tel) and isset($port) and isset($mail) and isset($vv) and isset($vc) and isset($ID_en)) and ControllerJure::checkEmpty($nom, $prenom, $adresse, $tel, $port, $mail)
                 //validate field non fonctionnel mais ne dérange pas le retse. a rendre ok.
                 ) {
                     // var_dump("hello!");

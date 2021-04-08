@@ -82,7 +82,7 @@ $mail=NULL;
                                     <td><label for="Nom_en">Nom entreprise:</label></td>
                                 <td> <input type="text" class="form-control <?php
                                 if(isset($_POST['Nom_en'])){
-                                    if(ControllerEntreprise::validateField($_POST['Nom_en']) ){
+                                    if(ControllerEntreprise::checkentreprise($_POST['Nom_en']) ){
                                         echo "is-invalid";
                                     }
                                     else{
@@ -174,7 +174,7 @@ $mail=NULL;
                                 <td><label for="Mail_en">Mail entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
                             if(isset($_POST['Mail_en'])){
-                                if(ControllerEntreprise::validateField($_POST['Mail_en'])){
+                                if(ControllerEntreprise::checkentreprise($_POST['Mail_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
