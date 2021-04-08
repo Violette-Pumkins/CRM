@@ -59,13 +59,23 @@ if (isset($_GET['action'])) {
 
             //verifie l'existence des variables mais pas la véracité
             if ((isset($nomj) and isset($prenomj) and isset($adressej) and isset($telj) and isset($portj) and isset($mailj) and isset($vv) and isset($vc) and isset($ID_en) and 
-            ControllerJure::validateNumber($telj) and ControllerJure::validateNumber($portj)and ControllerJure::validateField($nomj) and
-            ControllerJure::validateField($prenomj) and ControllerJure::checkEmptyJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc) and !ControllerJure::checkjure($nomj, $prenomj, $adressej, $telj, $portj, $mailj))
+            ControllerJure::validateNumber($telj) and ControllerJure::validateNumber($portj)and
+            ControllerJure::checkEmptyJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc) and !ControllerJure::checkjure($mailj))
             ) {
-                ControllerJure::addJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc, $ID_en);
-                header('Location: index.php?action=listejure');
-                // TODO : : penser a changer URL.
-                exit();
+                $coderetour=ControllerJure::addJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc, $ID_en);
+
+                if ($coderetour) {
+                    header('Location: index.php?action=listejure');
+                    // TODO : : penser a changer URL.
+                    exit();
+                    $_SESSION['Success']="L'ajout à été réussit";
+                    // Route('listejure');
+                    break;
+                }
+                else{
+                    $_SESSION['Erreur']="L'ajout à été problématique";
+                    // TODO: changer le msg
+                }
     
                 break;
             }
@@ -78,28 +88,32 @@ if (isset($_GET['action'])) {
     
         case 'addEn':
             if ($_GET['action'] = 'addEn') {
-                $_SESSION['entreprise'];
+                // $_SESSION['entreprise'];
     
                 $nome = isset($_POST['Nom_en']) ? $_POST['Nom_en'] : NULL;
                 // var_dump(isset($nome));
-                echo ($nome);
+                // echo ($nome);
                 $adressee = isset($_POST['Adresse_en']) ? $_POST['Adresse_en'] : NULL;
                 // var_dump(isset($adressee));
-                echo ($adressee);
+                // echo ($adressee);
                 $tele = isset($_POST['Tel_en']) ? $_POST['Tel_en'] : NULL;
                 // var_dump(isset($tele));
-                echo ($tele);
+                // echo ($tele);
                 $porte = isset($_POST['Port_en']) ? $_POST['Port_en'] : NULL;
                 // var_dump(isset($porte));
-                echo ($porte);
+                // echo ($porte);
                 $maile = isset($_POST['Mail_en']) ? $_POST['Mail_en'] : NULL;
                 // var_dump(isset($maile));
-                echo ($maile);
+                // echo ($maile);
             }
             //verifie l'existence des variables mais pas la véracité
-            if ((isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
+            if (
+                (isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)  and 
+                ControllerEntreprise::validateNumber($tele) and 
+                ControllerEntreprise::validateNumber($porte) and 
+                !ControllerEntreprise::validatename($nome)
+                and !ControllerEntreprise::validatemail($maile)
             ) {
-                // var_dump("hello!");
     
                 $coderetour = ControllerEntreprise::addEntreprise($nome, $adressee, $tele, $porte, $maile);
                 if ($coderetour) {
@@ -161,9 +175,9 @@ if (isset($_GET['action'])) {
                 // var_dump($_GET);
             //verifie l'existence des variables mais pas la véracité
             $entreprise=ControllerEntreprise::getEntrepriseById($ID_en);
-            var_dump($entreprise);
+            // var_dump($entreprise);
             if (isset($entreprise) and count($entreprise)>0) {
-                var_dump("hello!");
+                // var_dump("hello!");
                 $_SESSION['entreprise']=$entreprise[0];
                 require('view/view_header.php');
                 require('view/forms/view_form_en.php');
@@ -171,24 +185,26 @@ if (isset($_GET['action'])) {
             }
             else{
                 $ID_en=isset($_POST['ID_en']) ? $_POST['ID_en'] : NULL;
-                echo($ID_en);
+                // echo($ID_en);
                 $nome = isset($_POST['Nom_en']) ? $_POST['Nom_en'] : NULL;
                 // var_dump(isset($nome));
-                echo ($nome);
+                // echo ($nome);
                 $adressee = isset($_POST['Adresse_en']) ? $_POST['Adresse_en'] : NULL;
                 // var_dump(isset($adressee));
-                echo ($adressee);
+                // echo ($adressee);
                 $tele = isset($_POST['Tel_en']) ? $_POST['Tel_en'] : NULL;
                 // var_dump(isset($tele));
-                echo ($tele);
+                // echo ($tele);
                 $porte = isset($_POST['Port_en']) ? $_POST['Port_en'] : NULL;
                 // var_dump(isset($porte));
-                echo ($porte);
+                // echo ($porte);
                 $maile = isset($_POST['Mail_en']) ? $_POST['Mail_en'] : NULL;
                 // var_dump(isset($maile));
-                echo ($maile);
+                // echo ($maile);
                 //verifie l'existence des variables mais pas la véracité
-                if ((isset($ID_en) and isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
+                if ((isset($ID_en) and isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile) and 
+                !ControllerEntreprise::validatename($nome)
+                and !ControllerEntreprise::validatemail($maile)
                 ) {
                     // var_dump("hello!");
         
@@ -209,7 +225,9 @@ if (isset($_GET['action'])) {
                 }
                 header('Location: index.php?action=listeentreprise');
                 exit();
+                
             }
+            break;
         case 'updateJure':
             $ID_Jure = isset($_GET['ID_Jure']) ? $_GET['ID_Jure'] : NULL;
             // var_dump($ID_Jure);
@@ -247,7 +265,7 @@ if (isset($_GET['action'])) {
                 $ID_en = isset($_POST['ID_en']) ? $_POST['ID_en'] : null;
                 // var_dump(isset($ID_en) );
                 // verifie l'existence des variables mais pas la véracité
-                if ((isset($ID_Jure) and isset($nom) and isset($prenom) and isset($adresse) and isset($tel) and isset($port) and isset($mail) and isset($vv) and isset($vc) and isset($ID_en)) and ControllerJure::checkEmpty($nom, $prenom, $adresse, $tel, $port, $mail)
+                if ((isset($ID_Jure) and isset($nom) and isset($prenom) and isset($adresse) and isset($tel) and isset($port) and isset($mail) and isset($vv) and isset($vc) and isset($ID_en)) and ControllerJure::checkEmpty($nom, $prenom, $adresse, $tel, $port, $mail) and !ControllerJure::checkjure($mail)
                 //validate field non fonctionnel mais ne dérange pas le retse. a rendre ok.
                 ) {
                     // var_dump("hello!");
