@@ -28,6 +28,18 @@ class ControllerEntreprise{
         }
         return $records;
     }
+    public static function validateTest(string $field): bool
+    {
+        if(strcmp("test", $field) !== 0){
+            return false;
+        }
+        // if(!ControllerJure::checkentreprise($field)){
+        //     return false;
+        // }
+        else{
+            return true;
+        }
+    }
     public static function checkEmpty( string $nom, string $adresse, string $tel, string $port, string $mail) :bool
     {
         if((strlen(trim($nom))>0 and strlen(trim($adresse))>0 and strlen(trim($tel))>0 and strlen(trim($port))>0 and strlen(trim($mail))>0)){
@@ -41,38 +53,43 @@ class ControllerEntreprise{
     {
         return is_numeric($field) and strlen($field)>9 and strlen($field)<12;
     }
+
     public static function addEntreprise(string $nom, string $adresse, string $tel, string $port, string $mail)
     { 
-        // if(!ControllerEntreprise::checkentreprise($nom, $adresse)){
-        $sql= 'INSERT INTO `entreprise`(`Nom_entreprise`, `Adresse_entreprise`, `Tel_entreprise`, `Port_entreprise`, `Mail_entreprise`) VALUES (:nom_en, :adresse_en, :tel_en, :port_en, :mail_en)';
+        if(!ControllerEntreprise::validatemail($mail) or !ControllerEntreprise::validatename($nom)){
+            // var_dump("hello");
+            $sql= 'INSERT INTO `entreprise`(`Nom_entreprise`, `Adresse_entreprise`, `Tel_entreprise`, `Port_entreprise`, `Mail_entreprise`) VALUES (:nom_en, :adresse_en, :tel_en, :port_en, :mail_en)';
 
-        try{
-            $co=BDCRM::getConnexion();
-            $res=$co->prepare($sql);
-            $res->execute(array(':nom_en'=>$nom, ':adresse_en'=>$adresse, ':tel_en'=>$tel, ':port_en'=>$port, ':mail_en'=>$mail));
-            $res->closeCursor();
-            BDCRM::disconnect();
-            return true;
+            try{
+                // echo"hello";
+                $co=BDCRM::getConnexion();
+                // echo"hello";
+                $res=$co->prepare($sql);
+                $res->execute(array(':nom_en'=>$nom, ':adresse_en'=>$adresse, ':tel_en'=>$tel, ':port_en'=>$port, ':mail_en'=>$mail));
+                $res->closeCursor();
+                BDCRM::disconnect();
+                // var_dump("goodbye");
+                return true;
 
-        }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD-addentreprise</h1>'. $e->getMessage());
-        }
-    // }else {
-    //     $_SESSION['Erreur']="Entreprise invalide";
-    // } 
+            }catch(PDOException $e){
+                die('<h1>Erreur lecture en BDD-addentreprise</h1>'. $e->getMessage());
+            }
+        }else {
+            $_SESSION['Erreur']="Entreprise invalide";
+        } 
         return false;
     }
 
-    public static function checkentreprise(string $field):bool
+    public static function validatename(string $nom):bool
     {
         $codereturn=false;
         
-        $sql='SELECT * FROM entreprise WHERE Nom_entreprise = :nom_en AND Mail_entreprise = :mail_en'; 
+        $sql='SELECT * FROM entreprise WHERE Nom_entreprise LIKE :nom_en'; 
         
         try{
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
-            $res->execute(array(':nom_en'=>$field,':mail_en'=>$field));
+            $res->execute(array(':nom_en'=>$nom));
 
             $records=$res->fetchAll();
             $res->closeCursor();
@@ -81,7 +98,29 @@ class ControllerEntreprise{
             $codereturn=count($records)>0;
 
         }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD-checkentreprise</h1>'. $e->getMessage());
+            die('<h1>Erreur lecture en BDD-validatename</h1>'. $e->getMessage());
+        }
+            return $codereturn; 
+    }
+    public static function validatemail(string $mail):bool
+    {
+        $codereturn=false;
+        
+        $sql='SELECT * FROM entreprise WHERE Mail_entreprise LIKE :mail_en'; 
+        
+        try{
+            $co=BDCRM::getConnexion();
+            $res=$co->prepare($sql);
+            $res->execute(array(':mail_en'=>$mail));
+
+            $records=$res->fetchAll();
+            $res->closeCursor();
+            BDCRM::disconnect();
+
+            $codereturn=count($records)>0;
+
+        }catch(PDOException $e){
+            die('<h1>Erreur lecture en BDD-validatemail</h1>'. $e->getMessage());
         }
             return $codereturn; 
     }
@@ -169,22 +208,26 @@ class ControllerEntreprise{
         return false;
     }
     public static function updateEntreprise($ID_en, $nom_en, $adresse_en, $tel_en, $port_en, $mail_en)
-    {
+    {  
+        if(!ControllerEntreprise::validatemail($mail_en) or !ControllerEntreprise::validatename($nom_en)){
         $sql= 'UPDATE `entreprise` SET `Nom_entreprise`= :nom_en,`Adresse_entreprise`= :adresse_en,`Tel_entreprise`= :tel_en,`Port_entreprise`= :port_en,`Mail_entreprise`= :mail_en WHERE id_entreprise LIKE :ID_en';
-        try{
-            // var_dump("hello");
-            $co=BDCRM::getConnexion();
-            $res=$co->prepare($sql);
-            // var_dump("billy");
-            $res->execute(array(':nom_en'=>$nom_en, ':adresse_en'=>$adresse_en, ':tel_en'=>$tel_en, ':port_en'=>$port_en,':mail_en'=>$mail_en, ':ID_en'=>$ID_en ));
-            $res->closeCursor();
-            BDCRM::disconnect();
-            // var_dump("goodbye");
-            return true;
+            try{
+                // var_dump("hello");
+                $co=BDCRM::getConnexion();
+                $res=$co->prepare($sql);
+                // var_dump("billy");
+                $res->execute(array(':nom_en'=>$nom_en, ':adresse_en'=>$adresse_en, ':tel_en'=>$tel_en, ':port_en'=>$port_en,':mail_en'=>$mail_en, ':ID_en'=>$ID_en ));
+                $res->closeCursor();
+                BDCRM::disconnect();
+                // var_dump("goodbye");
+                return true;
 
-        }catch(PDOException $e){
-            die('<h1>Erreur lecture en BDD-deleteJure</h1>'. $e->getMessage());
-        }
+            }catch(PDOException $e){
+                die('<h1>Erreur lecture en BDD-deleteJure</h1>'. $e->getMessage());
+            }
+        }else {
+            $_SESSION['Erreur']="Entreprise invalide";
+        } 
         return false;
     }
 

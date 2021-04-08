@@ -107,7 +107,17 @@ $mail=NULL;
                             
                             <div class="input-group has-validation">
                                 <td><label for="Adresse_en">Adresse entreprise:</label></td>
-                            <td> <input type="text" class="form-control" name="Adresse_en" id="inputAdresse_en"  value="<?php
+                            <td> <input type="text" class="form-control <?php
+                            if(isset($_POST['Adresse_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Adresse_en'])){
+                                    echo "is-invalid";
+                                }
+                                else{
+                                    echo "is-valid";
+                                }
+                                
+                            }
+                            ?>" name="Adresse_en" id="inputAdresse_en"  value="<?php
                             if(isset($adresse)){
                                 echo $adresse;
                             }
@@ -124,7 +134,7 @@ $mail=NULL;
                                 <td><label for="Tel_en">Téléphone entreprise:</label></td>
                             <td> <input type="Text" class="form-control <?php
                             if(isset($_POST['Tel_en'])){
-                                if(!ControllerEntreprise::validateNumber($_POST['Tel_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Tel_en'])or !ControllerEntreprise::validateNumber($_POST['Tel_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
@@ -149,7 +159,7 @@ $mail=NULL;
                                 <td><label for="Port_en">Portable entreprise:</label></td>
                             <td> <input type="text" class="form-control <?php
                             if(isset($_POST['Port_en'])){
-                                if(!ControllerEntreprise::validateNumber($_POST['Port_en'])){
+                                if(ControllerEntreprise::validateField($_POST['Port_en'])or !ControllerEntreprise::validateNumber($_POST['Port_en'])){
                                     echo "is-invalid";
                                 }
                                 else{
