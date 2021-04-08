@@ -28,18 +28,15 @@ class ControllerEntreprise{
         }
         return $records;
     }
-    public static function validateTest(string $field): bool
-    {
-        if(strcmp("test", $field) !== 0){
-            return false;
-        }
-        // if(!ControllerJure::checkentreprise($field)){
-        //     return false;
-        // }
-        else{
-            return true;
-        }
-    }
+    /**
+     * check si champs vides
+     *  @param $nom
+     * @param $adresse
+     * @param $tel
+     * @param $port
+     * @param $mail
+     * @return bool
+     */
     public static function checkEmpty( string $nom, string $adresse, string $tel, string $port, string $mail) :bool
     {
         if((strlen(trim($nom))>0 and strlen(trim($adresse))>0 and strlen(trim($tel))>0 and strlen(trim($port))>0 and strlen(trim($mail))>0)){
@@ -49,12 +46,23 @@ class ControllerEntreprise{
             return false;
         }
     }
+    /**
+     * @param $field
+     * @return bool
+     */
     public static function validateNumber(string $field) :bool
     {
         return is_numeric($field) and strlen($field)>9 and strlen($field)<12;
     }
-
-    public static function addEntreprise(string $nom, string $adresse, string $tel, string $port, string $mail)
+/**
+ * @param $nom
+ * @param $adresse
+ * @param $tel
+ * @param $port
+ * @param $mail
+ * return bool
+ */
+    public static function addEntreprise(string $nom, string $adresse, string $tel, string $port, string $mail):bool
     { 
         if(!ControllerEntreprise::validatemail($mail) or !ControllerEntreprise::validatename($nom)){
             // var_dump("hello");
@@ -79,7 +87,11 @@ class ControllerEntreprise{
         } 
         return false;
     }
-
+/**
+ * controlle doublon de noms
+ * @param $nom
+ * @return bool
+ */
     public static function validatename(string $nom):bool
     {
         $codereturn=false;
@@ -102,6 +114,11 @@ class ControllerEntreprise{
         }
             return $codereturn; 
     }
+    /**
+ * controlle doublon de mails
+ * @param $mail
+ * @return bool
+ */
     public static function validatemail(string $mail):bool
     {
         $codereturn=false;
@@ -124,7 +141,13 @@ class ControllerEntreprise{
         }
             return $codereturn; 
     }
-    public static function checkAnyJureInEntreprise($ID_en)
+    /**
+     * check si jure est affilié a une session
+     *
+     * @param string $ID_en
+     * @return bool
+     */
+    public static function checkAnyJureInEntreprise(string $ID_en):bool
     {
         $sql= ('SELECT j.ID_Jure, e.id_entreprise FROM jure j JOIN entreprise e ON e.id_entreprise = j.id_entreprise WHERE j.id_entreprise LIKE :ID_en');
         try{
@@ -143,7 +166,13 @@ class ControllerEntreprise{
         }
         return false;
     }
-    public static function getEntrepriseById($ID_en)
+    /**
+     * récupère l'id de l'ntreprise
+     *
+     * @param string $ID_en
+     * @return null
+     */
+    public static function getEntrepriseById(string $ID_en):Null
     {
         $sql= ('SELECT * FROM entreprise WHERE id_entreprise LIKE :ID_en');
         try{
@@ -160,7 +189,13 @@ class ControllerEntreprise{
         }
         return NULL;
     }
-    public static function getJureById($ID_Jure)
+    /**
+     * récupère l'id du juré
+     *
+     * @param string $ID_Jure
+     * @return null
+     */
+    public static function getJureById(string $ID_Jure):Null
     {
         $sql= ('SELECT * FROM jure WHERE ID_Jure LIKE :ID_Jure');
         try{
@@ -177,8 +212,13 @@ class ControllerEntreprise{
         }
         return NULL;
     }
-
-    public static function deleteEntreprise(string $ID_en)
+    /**
+     * supprime une entreprise
+     *
+     * @param string $ID_en
+     * @return bool
+     */
+    public static function deleteEntreprise(string $ID_en):bool
     {
         $entreprise=ControllerEntreprise::getEntrepriseById($ID_en);
 
@@ -207,7 +247,18 @@ class ControllerEntreprise{
             }
         return false;
     }
-    public static function updateEntreprise($ID_en, $nom_en, $adresse_en, $tel_en, $port_en, $mail_en)
+    /**
+     * modifie entreprise
+     *
+     * @param string $ID_en
+     * @param string $nom_en
+     * @param string $adresse_en
+     * @param int $tel_en
+     * @param int $port_en
+     * @param string $mail_en
+     * @return boolean
+     */
+    public static function updateEntreprise(string $ID_en, string $nom_en, string $adresse_en, int $tel_en, int $port_en, string $mail_en):bool
     {  
         if(!ControllerEntreprise::validatemail($mail_en) or !ControllerEntreprise::validatename($nom_en)){
         $sql= 'UPDATE `entreprise` SET `Nom_entreprise`= :nom_en,`Adresse_entreprise`= :adresse_en,`Tel_entreprise`= :tel_en,`Port_entreprise`= :port_en,`Mail_entreprise`= :mail_en WHERE id_entreprise LIKE :ID_en';

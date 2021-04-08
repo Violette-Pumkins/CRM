@@ -4,7 +4,7 @@ class Controllerjure{
 
     /**
      * @param $choix
-     * @return void
+     * @return array
      */
     public static function afficherListeJure($choix=PDO::FETCH_ASSOC) : array
     {
@@ -32,10 +32,19 @@ class Controllerjure{
     }
 
     /**
-     * @param $choix
-     * @return void
+     * Créer un juré
+     * @param string $nomj
+     * @param string $prenomj
+     * @param string $adressej
+     * @param int $telj
+     * @param int $portj
+     * @param string $mailj
+     * @param bool $vv
+     * @param bool $vc
+     * @param string $ID_en
+     * @return bool
      */
-    public static function addJure( string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj, bool $vv, bool $vc, string $ID_en)
+    public static function addJure( string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj, bool $vv, bool $vc, string $ID_en):bool
     {
         if(!ControllerJure::checkjure($mailj))
         {
@@ -71,17 +80,19 @@ class Controllerjure{
         }
         return false;
     }
-
-    public static function validateTest(string $field): bool
-    {
-        if(strcmp("test", $field) !== 0){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
+    /**
+     * check si les champs sont pleins
+     *
+     * @param string $nomj
+     * @param string $prenomj
+     * @param string $adressej
+     * @param string $telj
+     * @param string $portj
+     * @param string $mailj
+     * @param boolean $vv
+     * @param boolean $vc
+     * @return boolean
+     */
     public static function checkEmptyJure(string $nomj, string $prenomj, string $adressej, string $telj, string $portj, string $mailj, bool $vv, bool $vc) :bool
     {
         if((strlen(trim($nomj))>0 and strlen(trim($prenomj))>0 and strlen(trim($adressej))>0 and strlen(trim($telj))>0 and strlen(trim($portj))>0 and strlen(trim($mailj))>0)){ 
@@ -91,6 +102,12 @@ class Controllerjure{
             return false;
         }
     }
+    /**
+     * check doublon mail jure
+     *
+     * @param string $mailj
+     * @return boolean
+     */
     public static function checkjure(string $mailj):bool
     {
         $codereturn=false;
@@ -113,10 +130,27 @@ class Controllerjure{
         }
             return $codereturn; 
     }
+    /**
+     * check si les champs telephone sont que 10 digitals
+     *
+     * @param string $field
+     * @return boolean
+     */
     public static function validateNumber(string $field) :bool
     {
         return is_numeric($field) and strlen($field)>9 and strlen($field)<12;
     }
+    /**
+     * check si champs vides
+     *
+     * @param string $nom
+     * @param string $prenom
+     * @param string $adresse
+     * @param string $tel
+     * @param string $port
+     * @param string $mail
+     * @return boolean
+     */
     public static function checkEmpty( string $nom, string $prenom, string $adresse, string $tel, string $port, string $mail) :bool
     {
         if((strlen(trim($nom))>0 and strlen(trim($prenom))>0 and strlen(trim($adresse))>0 and strlen(trim($tel))>0 and strlen(trim($port))>0 and strlen(trim($mail))>0)){
@@ -126,36 +160,13 @@ class Controllerjure{
             return false;
         }
     }
-
-    public static function checkentrepriseID(string $ID):bool
-    {
-        $codereturn=false;
-        
-        $sql='SELECT * FROM entreprise WHERE id_entreprise LIKE :ID_en'; 
-        
-        try{
-            $ID_int=intval($ID);
-            if($ID_int>0){
-                $co=BDCRM::getConnexion();
-                $res=$co->prepare($sql);
-                $res->execute(array('ID_en'=>$ID_int));
-
-                $records=$res->fetchAll();
-                $res->closeCursor();
-                BDCRM::disconnect();
-
-                $codereturn=count($records)>0;
-            }
-        }catch(Exception $e){
-            die('<h1>Erreur lecture en BDD-checkentreprise</h1>'. $e->getMessage());
-        }
-
-
-            return $codereturn; 
-    
-        
-    }
-    public static function checkAnySessionInJure($ID_Jure)
+    /**
+     * check si jure est associé a une session
+     *
+     * @param string $ID_Jure
+     * @return bool
+     */
+    public static function checkAnySessionInJure( string $ID_Jure):bool
     {
         $sql= ('SELECT j.ID_Jure FROM jure j JOIN participe p ON j.ID_Jure = p.ID_Jure WHERE p.ID_Jure LIKE :ID_Jure');
         try{
@@ -174,7 +185,13 @@ class Controllerjure{
         }
         return false;
     }
-    public static function getJureById($ID_Jure)
+    /**
+     * récupère id juré
+     *
+     * @param string $ID_Jure
+     * @return Null
+     */
+    public static function getJureById(string $ID_Jure):Null
     {
         $sql= ('SELECT * FROM jure WHERE ID_Jure LIKE :ID_Jure');
         try{
@@ -191,7 +208,13 @@ class Controllerjure{
         }
         return NULL;
     }
-    public static function deleteJure(string $ID_Jure)
+    /**
+     * supprime un juré
+     *
+     * @param string $ID_Jure
+     * @return bool
+     */
+    public static function deleteJure(string $ID_Jure):bool
     {
         $jure=ControllerJure::getJureById($ID_Jure);
 
@@ -215,8 +238,23 @@ class Controllerjure{
         }
             return false;
         
-    }   
-    public static function updateJure( $nom, $prenom, $adresse, $tel, $port, $mail, $vv, $vc, $ID_en, $ID_Jure)
+    }  
+    /**
+     * modifier juré
+     *
+     * @param string $nom
+     * @param string $prenom
+     * @param string $adresse
+     * @param integer $tel
+     * @param integer $port
+     * @param string $mail
+     * @param boolean $vv
+     * @param boolean $vc
+     * @param string $ID_en
+     * @param string $ID_Jure
+     * @return boolean
+     */ 
+    public static function updateJure( string $nom, string  $prenom, string  $adresse, int $tel, int $port, string  $mail, bool $vv, bool $vc, string  $ID_en, string  $ID_Jure):bool
     {
         $sql= 'UPDATE `jure` SET `Nom`= :nom,`Prenom`= :prenom,`Adresse_perso`= :adresse,`Tel_perso`= :tel,`Portable_perso`= :port,`Mail_perso`= :mail,`Visible_sur_VALCE`= :vv,`Visible_sur_CERES`= :vc,`id_entreprise`= :ID_en WHERE `ID_Jure` LIKE :ID_Jure';
         try{
