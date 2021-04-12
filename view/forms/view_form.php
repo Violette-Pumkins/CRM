@@ -26,6 +26,7 @@ $vc=NULL;
 $ID_en = NULL;
 
 if (isset($_SESSION['jure'])) {
+
     $jure = $_SESSION['jure'];
     // var_dump($jure);
     $ID_Jure = $jure['ID_Jure'];
@@ -35,11 +36,11 @@ if (isset($_SESSION['jure'])) {
     $tel = $jure['Tel_perso'];
     $port = $jure['Portable_perso'];
     $mail = $jure['Mail_perso'];
-}
 
     if (isset($_POST['Nom'])) {
         $nom = $_POST['Nom'];
     }
+    var_dump($nom);
     if (isset($_POST['Prenom'])) {
         $prenom = $_POST['Prenom'];
     }
@@ -55,6 +56,7 @@ if (isset($_SESSION['jure'])) {
     if (isset($_POST['Mail_perso'])) {
         $mail = $_POST['Mail_perso'];
     }
+}
 
 ?>
 <div class="container-xl">

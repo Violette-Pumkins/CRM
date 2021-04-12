@@ -210,9 +210,9 @@ if (isset($_GET['action'])) {
                 require('view/view_header.php');
                 require('view/forms/view_form.php');
                 require('view/view_footer.php');
-            }else{
-
-                $ID_Jure=isset($_POST['ID_Jure']) ? $_POST['ID_Jure'] : NULL;
+            }
+            else{
+                $ID_Jure=isset($_POST['ID_Jure']) ? $_POST['ID_Jure'] : null;
                 
                 $nom = isset($_POST['nom']) ? $_POST['nom'] : null;
                 
@@ -231,29 +231,30 @@ if (isset($_GET['action'])) {
                 $vc = isset($_POST['vc']) ? true : false;
                 
                 $ID_en = isset($_POST['ID_en']) ? $_POST['ID_en'] : null;
+            
                 
                 // verifie l'existence des variables mais pas la véracité
                 if ((isset($ID_Jure) and isset($nom) and isset($prenom) and isset($adresse) and isset($tel) and isset($port) and isset($mail) and isset($vv) and isset($vc) and isset($ID_en)) and ControllerJure::checkEmpty($nom, $prenom, $adresse, $tel, $port, $mail) and !ControllerJure::checkjure($mail)
-                //validate field non fonctionnel mais ne dérange pas le retse. a rendre ok.
                 ) {
-                    
-        
+                    var_dump("hello!");
                     $coderetour = ControllerJure::updateJure($nom, $prenom, $adresse, $tel, $port, $mail, $vv, $vc, $ID_en, $ID_Jure);
+                    
                     if ($coderetour) {
                         unset($_SESSION['jure']);
                         header('Location: index.php?action=listejure');
                         exit();
                         $_SESSION['Success']="La modification à été réussit";
                         break;
-                    }
-                    else{
+                    } else{
                         $_SESSION['Erreur']="La modification à été problématique";
                     }
-                }
-                else{
+                } else{
                     unset($_SESSION['jure']);
                 }
+            
                 header('Location: index.php?action=listejure');
                 exit();
             }
+            break;
+            
 }
