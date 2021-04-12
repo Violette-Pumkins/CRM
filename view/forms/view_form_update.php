@@ -25,7 +25,7 @@ $vv=NULL;
 $vc=NULL;
 $ID_en = NULL;
 
-if (isset($_SESSION['jure'])) {
+if ($_SESSION['jure']) {
     $jure = $_SESSION['jure'];
     // var_dump($jure);
     $ID_Jure = $jure['ID_Jure'];
@@ -77,19 +77,8 @@ if (isset($_SESSION['jure'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    if (isset($_SESSION['jure'])) {
-                        echo '<form action="index.php?action=updateJure "';
-                    } else{
-                        echo '<form action="index.php?action=addJure "';
-                    }
-                    ?>
-                    method="POST">
-                    <?php
-                    if (isset($_SESSION['jure'])) {
-                        echo ' <input type="hidden" name="ID_Jure" value="' . $ID_Jure . '">';
-                    }
-                    ?>
+                    <form action="index.php?action=updateJure" method="POST">
+                    <input type="hidden" name="ID_Jure" value=" <?php $ID_Jure?>">
                     <tr>
 
                         <div class="input-group has-validation">
@@ -248,17 +237,7 @@ if (isset($_SESSION['jure'])) {
                     </tr>
                     <tr>
                         <td>
-                            <a href="index.php?action=addEn" class="btn btn-outline-success" role="button" aria-pressed="true">Ajoutez une entreprise</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="action" value="addJure">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="submit" name="action" value="add" class="btn btn-outline-success">Validez</button>
+                            <button type="submit" name="action" value="update" class="btn btn-outline-success">Validez</button>
                         </td>
                         <td>
                             <input type="hidden" name="action" value="updateJure">

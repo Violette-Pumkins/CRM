@@ -169,10 +169,10 @@ class ControllerEntreprise{
     /**
      * récupère l'id de l'ntreprise
      *
-     * @param string $ID_en
+     * @param $ID_en
      * @return null
      */
-    public static function getEntrepriseById(string $ID_en):Null
+    public static function getEntrepriseById($ID_en)
     {
         $sql= ('SELECT * FROM entreprise WHERE id_entreprise LIKE :ID_en');
         try{
@@ -195,7 +195,7 @@ class ControllerEntreprise{
      * @param string $ID_Jure
      * @return null
      */
-    public static function getJureById(string $ID_Jure):Null
+    public static function getJureById(string $ID_Jure)
     {
         $sql= ('SELECT * FROM jure WHERE ID_Jure LIKE :ID_Jure');
         try{

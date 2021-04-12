@@ -51,7 +51,6 @@ class Controllerjure{
         //create request insert entreprise et insert juré
         $sql= 'INSERT INTO `jure`(`Nom`, `Prenom`, `Adresse_perso`, `Tel_perso`, `Portable_perso`, `Mail_perso`, `Visible_sur_VALCE`, `Visible_sur_CERES`, `id_entreprise`) VALUES (:nom, :prenom, :adresse, :tel, :port, :mail, :vv, :vc, :id_en)';
         try {
-            // echo "hello";
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
             // echo"execution";
@@ -191,7 +190,7 @@ class Controllerjure{
      * @param string $ID_Jure
      * @return Null
      */
-    public static function getJureById(string $ID_Jure):Null
+    public static function getJureById($ID_Jure)
     {
         $sql= ('SELECT * FROM jure WHERE ID_Jure LIKE :ID_Jure');
         try{

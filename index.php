@@ -34,7 +34,7 @@ if (isset($_GET['action'])) {
     
         case 'addJure':
             if ($_GET['action'] = 'addjure') {
-    
+
                 $nomj = isset($_POST['nom']) ? $_POST['nom'] : null;
 
                 $prenomj = isset($_POST['prenom']) ? $_POST['prenom'] : null;
@@ -48,35 +48,37 @@ if (isset($_GET['action'])) {
                 $mailj = isset($_POST['mail']) ? $_POST['mail'] : null;
     
                 $vv = isset($_POST['vv']) ? true : false;
-                // var_dump(isset($vv));
+
                 $vc = isset($_POST['vc']) ? true : false;
+
                 $ID_en = isset($_POST['ID_en']) ? $_POST['ID_en'] : null;
-                
             }
+            
+            
+                //verifie l'existence des variables mais pas la véracité
+                if ((isset($nomj) and isset($prenomj) and isset($adressej) and isset($telj) and isset($portj) and isset($mailj) and isset($vv) and isset($vc) and isset($ID_en)
+                and 
+                ControllerJure::validateNumber($telj) and ControllerJure::validateNumber($portj)and
+                ControllerJure::checkEmptyJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc) and !ControllerJure::checkjure($mailj)
+                )
+                ) {
+                    $coderetour=ControllerJure::addJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc, $ID_en);
 
-            //verifie l'existence des variables mais pas la véracité
-            if ((isset($nomj) and isset($prenomj) and isset($adressej) and isset($telj) and isset($portj) and isset($mailj) and isset($vv) and isset($vc) and isset($ID_en) and 
-            ControllerJure::validateNumber($telj) and ControllerJure::validateNumber($portj)and
-            ControllerJure::checkEmptyJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc) and !ControllerJure::checkjure($mailj))
-            ) {
-                $coderetour=ControllerJure::addJure($nomj, $prenomj, $adressej, $telj, $portj, $mailj, $vv, $vc, $ID_en);
-
-                if ($coderetour) {
-                    header('Location: index.php?action=listejure');
-                    // TODO : : penser a changer URL.
-                    exit();
-                    $_SESSION['Success']="L'ajout à été réussit";
-                    // Route('listejure');
-                    break;
-                }
-                else{
-                    $_SESSION['Erreur']="L'ajout à été problématique";
-                    // TODO: changer le msg
-                }
+                    if ($coderetour) {
+                        header('Location: index.php?action=listejure');
+                        // TODO : : penser a changer URL.
+                        exit();
+                        $_SESSION['Success']="L'ajout à été réussit";
+                        // Route('listejure');
+                        break;
+                    }
+                    else{
+                        $_SESSION['Erreur']="L'ajout à été problématique";
+                        // TODO: changer le msg
+                    }
     
                 break;
-            }
-    
+                }
             require('view/view_header.php');
             require('view/forms/view_form.php');
             require('view/view_footer.php');
@@ -191,6 +193,9 @@ if (isset($_GET['action'])) {
                         $_SESSION['Erreur']="L'ajout à été problématique";
                     }
                 }
+                else{
+                    unset($_SESSION['entreprise']);
+                }
                 header('Location: index.php?action=listeentreprise');
                 exit();
                 
@@ -244,6 +249,9 @@ if (isset($_GET['action'])) {
                     else{
                         $_SESSION['Erreur']="La modification à été problématique";
                     }
+                }
+                else{
+                    unset($_SESSION['jure']);
                 }
                 header('Location: index.php?action=listejure');
                 exit();
