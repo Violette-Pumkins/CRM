@@ -58,8 +58,6 @@ if (isset($_SESSION['jure'])) {
     }
 }
 
-}
-
 ?>
 <div class="container-xl">
     <div class="row">
