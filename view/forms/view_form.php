@@ -58,6 +58,8 @@ if (isset($_SESSION['jure'])) {
     }
 }
 
+}
+
 ?>
 <div class="container-xl">
     <div class="row">
@@ -82,7 +84,7 @@ if (isset($_SESSION['jure'])) {
                     <?php
                     if (isset($_SESSION['jure'])) {
                         echo '<form action="index.php?action=updateJure "';
-                    } else{
+                    } else {
                         echo '<form action="index.php?action=addJure "';
                     }
                     ?>
