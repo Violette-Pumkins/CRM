@@ -36,17 +36,17 @@ if (isset($_GET['action'])) {
         case 'addJure':
             if ($_GET['action'] = 'addjure') {
     
-                $nomj = isset($_POST['nom']) ? $_POST['nom'] : null;
+                $nomj = trim(isset($_POST['nom'])) ? trim($_POST['nom']) : null;
 
-                $prenomj = isset($_POST['prenom']) ? $_POST['prenom'] : null;
+                $prenomj = trim(isset($_POST['prenom'])) ? trim($_POST['prenom']) : null;
             
-                $adressej = isset($_POST['adresse']) ? $_POST['adresse'] : null;
+                $adressej = trim(isset($_POST['adresse'])) ? trim($_POST['adresse']) : null;
                 
                 $telj = isset($_POST['tel']) ? $_POST['tel'] : null;
 
                 $portj = isset($_POST['port']) ? $_POST['port'] : null;
     
-                $mailj = isset($_POST['mail']) ? $_POST['mail'] : null;
+                $mailj = trim(isset($_POST['mail'])) ? trim($_POST['mail']) : null;
     
                 $vv = isset($_POST['vv']) ? true : false;
                 // var_dump(isset($vv));
@@ -89,15 +89,15 @@ if (isset($_GET['action'])) {
             if ($_GET['action'] = 'addEn') {
                 // $_SESSION['entreprise'];
     
-                $nome = isset($_POST['Nom_en']) ? $_POST['Nom_en'] : NULL;
+                $nome = trim(isset($_POST['Nom_en'])) ? trim($_POST['Nom_en']) : NULL;
                 
-                $adressee = isset($_POST['Adresse_en']) ? $_POST['Adresse_en'] : NULL;
+                $adressee = trim(isset($_POST['Adresse_en'])) ? trim($_POST['Adresse_en']) : NULL;
                 
                 $tele = isset($_POST['Tel_en']) ? $_POST['Tel_en'] : NULL;
                 
                 $porte = isset($_POST['Port_en']) ? $_POST['Port_en'] : NULL;
                 
-                $maile = isset($_POST['Mail_en']) ? $_POST['Mail_en'] : NULL;
+                $maile = trim(isset($_POST['Mail_en'])) ? trim($_POST['Mail_en']) : NULL;
                 
             }
             //verifie l'existence des variables mais pas la véracité
@@ -189,10 +189,10 @@ if (isset($_GET['action'])) {
             else{
                 $ID_en=isset($_POST['ID_en']) ? $_POST['ID_en'] : NULL;
                 $nome = trim(isset($_POST['Nom_en'])) ? trim($_POST['Nom_en']): NULL;
-                $adressee = isset($_POST['Adresse_en']) ? $_POST['Adresse_en'] : NULL;
+                $adressee = trim(isset($_POST['Adresse_en'])) ? trim($_POST['Adresse_en']) : NULL;
                 $tele = isset($_POST['Tel_en']) ? $_POST['Tel_en'] : NULL;
                 $porte = isset($_POST['Port_en']) ? $_POST['Port_en'] : NULL;
-                $maile = isset($_POST['Mail_en']) ? $_POST['Mail_en'] : NULL;
+                $maile = trim(isset($_POST['Mail_en'])) ? trim($_POST['Mail_en']) : NULL;
                 // var_dump(isset($nome));
                 // var_dump(isset($adressee)); 
                 // var_dump(isset($tele)); 
@@ -276,17 +276,17 @@ if (isset($_GET['action'])) {
                 $ID_Jure=isset($_POST['ID_Jure']) ? $_POST['ID_Jure'] : null;
                 // var_dump($ID_Jure);
 
-                $nom = isset($_POST['nom']) ? $_POST['nom'] : null;
+                $nom = trim(isset($_POST['nom'])) ? trim($_POST['nom']) : null;
                 // var_dump($nom);
-                $prenom = isset($_POST['prenom']) ? $_POST['prenom'] : null;
+                $prenom = trim(isset($_POST['prenom'])) ? trim($_POST['prenom']) : null;
                 // var_dump($prenom);
-                $adresse = isset($_POST['adresse']) ? $_POST['adresse'] : null;
+                $adresse = trim(isset($_POST['adresse'])) ? trim($_POST['adresse']) : null;
                 // var_dump($adresse);
                 $tel = isset($_POST['tel']) ? $_POST['tel'] : null;
                 // var_dump($tel);
                 $port = isset($_POST['port']) ? $_POST['port'] : null;
                 // var_dump($port);
-                $mail = isset($_POST['mail']) ? $_POST['mail'] : null;
+                $mail = trim(isset($_POST['mail'])) ? trim($_POST['mail']) : null;
                 // var_dump($mail);
                 $vv = isset($_POST['vv']) ? true : false;
                 // var_dump($vv);
