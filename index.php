@@ -213,43 +213,50 @@ if (isset($_GET['action'])) {
                         // var_dump($maile);
                         // var_dump($mail_en);
 
-                        if(strcmp($maile, $mail_en)==0){
+                        if (strcmp($maile, $mail_en)==0) {
                             $mail_valid_en=true;
-                            
-                        }
+                        } else {
+                            $mail_valid_en=!ControllerEntreprise::validatemail($maile);
                         // var_dump($mail_valid_en);
-                        if(strcmp($nome, $nom_en)==0){
+                        // var_dump($maile);
+                        // var_dump($mail_en);
+                        }
+
+                        if (strcmp($nome, $nom_en)==0) {
                             $nom_valid_en=true;
+                        } else {
+                            $nom_valid_en=!ControllerEntreprise::validatename($nome);
+                            // var_dump($nom_valid_en);
                         }
-                        // var_dump($nom_valid_en);
-                        // var_dump($mail_valid_en);
-                    }else{
-                        $mail_valid_en=!ControllerEntreprise::validatemail($maile);
-                        $nom_valid_en=!ControllerEntreprise::validatename($nome);
-                        // var_dump(!ControllerEntreprise::validatemail($maile));
-                        // var_dump(!ControllerEntreprise::validatename($nome));
-                    }  
+                    } 
                 }
-                //verifie l'existence des variables mais pas la véracité
+                    // var_dump("index l:233");
                 if ((isset($ID_en) and isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
-                and ($mail_valid_en or $nom_valid_en)
+                // and ($mail_valid_en or $nom_valid_en)
                 ){
+                    // var_dump("index l:237");
                     $coderetour = ControllerEntreprise::updateEntreprise($ID_en, $nome, $adressee, $tele, $porte, $maile);
                     // var_dump($coderetour);
+                    // var_dump("index l:239");
                     if ($coderetour) {
                         
                         unset($_SESSION['entreprise']);
+                        // var_dump("index l:241");
                         header('Location: index.php?action=listeentreprise');
                         $_SESSION['Success']="La modification de l'entreprise à été réussit";
                         exit();
-
-                    }else{
+                    }else {
+                        // var_dump("index l:247");
                         header('Location: index.php?action=listeentreprise');
                         $_SESSION['Erreur']="La modification de l'entreprise à été problématique";
                         exit();
                     }
-                    
-                } 
+                }else {
+                    // var_dump("index l:255");
+                    header('Location: index.php?action=listeentreprise');
+                    $_SESSION['Erreur']="La modification de l'entreprise à été problématique";
+                    exit();
+                }  
                 
             }
             break;
