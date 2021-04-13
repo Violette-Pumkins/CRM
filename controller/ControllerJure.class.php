@@ -54,7 +54,6 @@ class Controllerjure{
             // echo "hello";
             $co=BDCRM::getConnexion();
             $res=$co->prepare($sql);
-            // echo"execution";
             $res->execute(array(
                     ':nom'=> $nomj,
                 ':prenom'=> $prenomj,
@@ -112,7 +111,7 @@ class Controllerjure{
     {
         $codereturn=false;
         
-        $sql='SELECT * FROM jure WHERE Mail_perso LIKE :mail'; 
+        $sql='SELECT * FROM jure WHERE Mail_perso = :mail'; 
         
         try{
             $co=BDCRM::getConnexion();
@@ -188,10 +187,10 @@ class Controllerjure{
     /**
      * récupère id juré
      *
-     * @param string $ID_Jure
+     * @param $ID_Jure
      * @return Null
      */
-    public static function getJureById(string $ID_Jure):Null
+    public static function getJureById($ID_Jure)
     {
         $sql= ('SELECT * FROM jure WHERE ID_Jure LIKE :ID_Jure');
         try{

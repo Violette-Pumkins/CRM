@@ -42,16 +42,6 @@ $mail=NULL;
     
     <div class="container-xl">
         <div class="row">
-            <div class="col-md">
-            <?php
-            if(isset($_SESSION['Erreur'])){ ?>
-                <div class="alert alert-warning" role="alert">
-                <?php echo $_SESSION['Erreur'] ?>
-            </div>
-            <?php 
-                unset($_SESSION['Erreur']);
-            }
-            ?>
                 <table class="table table-borderless">
                     <thead>
                         <tr>

@@ -21,8 +21,8 @@ $adresse = NULL;
 $tel = NULL;
 $port = NULL;
 $mail = NULL;
-$vv=NULL;
-$vc=NULL;
+$vv=false;
+$vc=false;
 $ID_en = NULL;
 
 if (isset($_SESSION['jure'])) {
@@ -36,11 +36,16 @@ if (isset($_SESSION['jure'])) {
     $tel = $jure['Tel_perso'];
     $port = $jure['Portable_perso'];
     $mail = $jure['Mail_perso'];
+    $ID_en = $jure['id_entreprise'];
+    $vv= intval($jure['Visible_sur_VALCE'])==1;
+    $vc= intval($jure['Visible_sur_CERES'])==1;
+    // var_dump($_POST);
+    // var_dump($jure);
 
     if (isset($_POST['Nom'])) {
         $nom = $_POST['Nom'];
     }
-    var_dump($nom);
+    // var_dump($nom);
     if (isset($_POST['Prenom'])) {
         $prenom = $_POST['Prenom'];
     }
@@ -56,8 +61,16 @@ if (isset($_SESSION['jure'])) {
     if (isset($_POST['Mail_perso'])) {
         $mail = $_POST['Mail_perso'];
     }
+    if (isset($_POST['id_entreprise'])) {
+        $ID_en = $_POST['id_entreprise'];
+    }
+    if (isset($_POST['vv'])) {
+        $vv = true;
+    }
+    if (isset($_POST['vc'])) {
+        $vc = true;
+    }
 }
-
 ?>
 <div class="container-xl">
     <div class="row">
@@ -220,11 +233,27 @@ if (isset($_SESSION['jure'])) {
                         </td>
                     </tr>
                     <td> <label for="vv">Visible sur valce:</label></td>
-                    <td> <input type="checkbox" name="vv" style="height:25px; width:25px;"> <br><br>
+                    <td>
+                    <?php 
+                        if ($vv) {
+                            echo '<input type="checkbox" checked name="vv" style="height:25px; width:25px;"> ';
+                        }else{
+                            echo '<input type="checkbox" name="vv" style="height:25px; width:25px;"> ';
+                        }
+                    ?>
+                    <br><br>
                     </td>
                     </tr>
                     <td> <label for="vc">Visible sur ceres:</label></td>
-                    <td> <input type="checkbox" name="vc" style="height:25px; width:25px;"> <br><br>
+                    <td> 
+                    <?php 
+                        if ($vc) {
+                            echo '<input type="checkbox" checked name="vc" style="height:25px; width:25px;"> ';
+                        }else{
+                            echo '<input type="checkbox" name="vc" style="height:25px; width:25px;"> ';
+                        }
+                    ?>
+                    <br><br>
                     </td>
                     </tr>
 
@@ -243,7 +272,12 @@ if (isset($_SESSION['jure'])) {
                         <td>
                             <select class="form-control form-control-lg" name="ID_en" id="ID_en">
                                 <?php foreach ($ens as $en) {
-                                    echo ('<option value="' . $en->getID_en() . '">' . $en->getNom_en() . '</option>');
+                                        if(isset($ID_en) and  intval($en->getID_en())==intval($ID_en)){
+                                            echo ('<option selected value="' . $en->getID_en() . '">' . $en->getNom_en() . '</option>');
+                                        } else{
+
+                                            echo('<option value="' . $en->getID_en() . '">' . $en->getNom_en() . '</option>');
+                                        }
                                 } ?>
                             </select>
                         </td>
