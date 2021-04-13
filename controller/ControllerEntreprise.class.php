@@ -54,7 +54,7 @@ class ControllerEntreprise{
     {
         return is_numeric($field) and strlen($field)>9 and strlen($field)<12;
     }
-/**
+/*
  * @param $nom
  * @param $adresse
  * @param $tel
@@ -87,7 +87,7 @@ class ControllerEntreprise{
         } 
         return false;
     }
-/**
+ /**
  * controlle doublon de noms
  * @param $nom
  * @return bool
@@ -258,10 +258,12 @@ class ControllerEntreprise{
      * @param string $mail_en
      * @return boolean
      */
-    public static function updateEntreprise(string $ID_en, string $nom_en, string $adresse_en, int $tel_en, int $port_en, string $mail_en):bool
+    public static function updateEntreprise($ID_en, string $nom_en, string $adresse_en, int $tel_en, int $port_en, string $mail_en):bool
     {  
+        // var_dump("cntlr_en l:262");
         if(!ControllerEntreprise::validatemail($mail_en) or !ControllerEntreprise::validatename($nom_en)){
-        $sql= 'UPDATE `entreprise` SET `Nom_entreprise`= :nom_en,`Adresse_entreprise`= :adresse_en,`Tel_entreprise`= :tel_en,`Port_entreprise`= :port_en,`Mail_entreprise`= :mail_en WHERE id_entreprise LIKE :ID_en';
+            // var_dump("cntlr_en l:264");
+            $sql= 'UPDATE `entreprise` SET `Nom_entreprise`= :nom_en,`Adresse_entreprise`= :adresse_en,`Tel_entreprise`= :tel_en,`Port_entreprise`= :port_en,`Mail_entreprise`= :mail_en WHERE id_entreprise LIKE :ID_en';
             try{
                 // var_dump("hello");
                 $co=BDCRM::getConnexion();

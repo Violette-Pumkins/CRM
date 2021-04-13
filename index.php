@@ -112,30 +112,39 @@ if (isset($_GET['action'])) {
                 $coderetour = ControllerEntreprise::addEntreprise($nome, $adressee, $tele, $porte, $maile);
                 if ($coderetour) {
                     header('Location: index.php?action=listeentreprise');
-                    
-                    exit();
                     $_SESSION['Success']="L'ajout à été réussit";
-                    
-                    break;
+                    exit();
                 }
                 else{
+                    header('Location: index.php?action=listeentreprise');
                     $_SESSION['Erreur']="L'ajout à été problématique";
-                    
+                    exit();
                 }
             }
                 unset($_SESSION['entreprise']);
-        
-            require('view/view_header.php');
-            require('view/forms/view_form_en.php');
-            require('view/view_footer.php');
+                require('view/view_header.php');
+                require('view/forms/view_form_en.php');
+                require('view/view_footer.php');
             break;
+
         case 'deleteJure':
             if(isset($_POST['ID_Jure'])){
                 $ID = $_POST['ID_Jure'];
                 $coderetour = ControllerJure::deleteJure($ID);
+                // var_dump("index l:134");
+                if($coderetour){ 
+                    // var_dump("index l:136");
+                    // var_dump($coderetour);
+                    header('Location: index.php?action=listejure');
+                    $_SESSION['Success']="La suppression du juré à été réussit";
+                    exit();
+                }else{
+                    // var_dump("index l:142");
+                    header('Location: index.php?action=listejure');
+                    $_SESSION['Erreur']="Cette suppression n'a pas fonctionné";
+                    exit();
+                } 
             }
-                header('Location: index.php?action=listejure');
-                exit();
             break;
 
         case'confirm':
@@ -156,9 +165,14 @@ if (isset($_GET['action'])) {
             if(isset($_POST['ID_en'])){
                 $ID_en = $_POST['ID_en'];
                 $coderetour = ControllerEntreprise::deleteEntreprise($ID_en);
-            }
                 header('Location: index.php?action=listeentreprise');
+                $_SESSION['Success']="La suppression de cette entreprise à été réussit";
                 exit();
+            } else{
+                header('Location: index.php?action=listeentreprise');
+                $_SESSION['Erreur']="Cette suppression n'a pas fonctionné";
+                exit();
+            }
             break;
         case 'updateEntreprise':
                 $ID_en = isset($_GET['ID_en']) ? $_GET['ID_en'] : NULL;
@@ -168,6 +182,7 @@ if (isset($_GET['action'])) {
             if (isset($entreprise) and count($entreprise)>0) {
                 $_SESSION['entreprise']=$entreprise[0];
                 require('view/view_header.php');
+                require('view/baby_views/messages.php');
                 require('view/forms/view_form_en.php');
                 require('view/view_footer.php');
             }
@@ -211,30 +226,30 @@ if (isset($_GET['action'])) {
                     }else{
                         $mail_valid_en=!ControllerEntreprise::validatemail($maile);
                         $nom_valid_en=!ControllerEntreprise::validatename($nome);
+                        // var_dump(!ControllerEntreprise::validatemail($maile));
+                        // var_dump(!ControllerEntreprise::validatename($nome));
                     }  
                 }
                 //verifie l'existence des variables mais pas la véracité
                 if ((isset($ID_en) and isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
                 and ($mail_valid_en or $nom_valid_en)
-                ) 
-                {
-        
+                ){
                     $coderetour = ControllerEntreprise::updateEntreprise($ID_en, $nome, $adressee, $tele, $porte, $maile);
+                    // var_dump($coderetour);
                     if ($coderetour) {
+                        
                         unset($_SESSION['entreprise']);
                         header('Location: index.php?action=listeentreprise');
-                        exit();
                         $_SESSION['Success']="La modification de l'entreprise à été réussit";
-                        break;
-                    }
-                    else{
+                        exit();
+
+                    }else{
+                        header('Location: index.php?action=listeentreprise');
                         $_SESSION['Erreur']="La modification de l'entreprise à été problématique";
+                        exit();
                     }
-                }
-                
-    
-                header('Location: index.php?action=listeentreprise');
-                exit();
+                    
+                } 
                 
             }
             break;
@@ -306,22 +321,25 @@ if (isset($_GET['action'])) {
                 }
                 if ((isset($ID_Jure) and isset($nom) and isset($prenom) and isset($adresse) and isset($tel) and isset($port) and isset($mail) and isset($vv) and isset($vc) and isset($ID_en)) and ControllerJure::checkEmpty($nom, $prenom, $adresse, $tel, $port, $mail) 
                 and $mail_valid
-                ) {
-                    // var_dump("hello!");
+                ) 
+                {
+                    // var_dump("index l:321");
                     $coderetour = ControllerJure::updateJure($nom, $prenom, $adresse, $tel, $port, $mail, $vv, $vc, $ID_en, $ID_Jure);
                     
                     if ($coderetour) {
                         unset($_SESSION['jure']);
+                        // var_dump("index l:323");
+                        header('Location: index.php?action=listejure');
+                        $_SESSION['Success']="La modification du juré à été réussit";
+                        exit();
+
+                    } 
+                }else{
+                        // var_dump("index l:331");
+                        $_SESSION['Erreur']="La modification du juré à été problématique";
                         header('Location: index.php?action=listejure');
                         exit();
-                        $_SESSION['Success']="La modification à été réussit";
-                        break;
-                    } else{
-                        $_SESSION['Erreur']="La modification à été problématique";
                     }
-                }
-                header('Location: index.php?action=listejure');
-                exit();
             }
             break;
             
