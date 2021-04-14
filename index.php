@@ -182,7 +182,6 @@ if (isset($_GET['action'])) {
             if (isset($entreprise) and count($entreprise)>0) {
                 $_SESSION['entreprise']=$entreprise[0];
                 require('view/view_header.php');
-                require('view/baby_views/messages.php');
                 require('view/forms/view_form_en.php');
                 require('view/view_footer.php');
             }
@@ -232,7 +231,7 @@ if (isset($_GET['action'])) {
                 }
                     // var_dump("index l:233");
                 if ((isset($ID_en) and isset($nome) and isset($adressee) and isset($tele) and isset($porte) and isset($maile)) and ControllerEntreprise::checkEmpty($nome, $adressee, $tele, $porte, $maile)
-                // and ($mail_valid_en or $nom_valid_en)
+                and ($mail_valid_en or $nom_valid_en)
                 ){
                     // var_dump("index l:237");
                     $coderetour = ControllerEntreprise::updateEntreprise($ID_en, $nome, $adressee, $tele, $porte, $maile);
@@ -254,7 +253,7 @@ if (isset($_GET['action'])) {
                 }else {
                     // var_dump("index l:255");
                     header('Location: index.php?action=listeentreprise');
-                    $_SESSION['Erreur']="La modification de l'entreprise à été problématique";
+                    $_SESSION['Erreur']="La modification de l'entreprise à été réussit";
                     exit();
                 }  
                 

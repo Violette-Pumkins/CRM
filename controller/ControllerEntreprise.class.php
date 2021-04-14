@@ -54,14 +54,14 @@ class ControllerEntreprise{
     {
         return is_numeric($field) and strlen($field)>9 and strlen($field)<12;
     }
-/*
- * @param $nom
- * @param $adresse
- * @param $tel
- * @param $port
- * @param $mail
- * return bool
- */
+    /**
+    * @param $nom
+    * @param $adresse
+    * @param $tel
+    * @param $port
+    * @param $mail
+    * @return bool
+    */
     public static function addEntreprise(string $nom, string $adresse, string $tel, string $port, string $mail):bool
     { 
         if(!ControllerEntreprise::validatemail($mail) or !ControllerEntreprise::validatename($nom)){
@@ -87,11 +87,11 @@ class ControllerEntreprise{
         } 
         return false;
     }
- /**
- * controlle doublon de noms
- * @param $nom
- * @return bool
- */
+    /**
+     * controlle doublon de noms
+     * @param $nom
+     * @return bool
+     */
     public static function validatename(string $nom):bool
     {
         $codereturn=false;
@@ -115,10 +115,10 @@ class ControllerEntreprise{
             return $codereturn; 
     }
     /**
- * controlle doublon de mails
- * @param $mail
- * @return bool
- */
+     * controlle doublon de mails
+     * @param $mail
+     * @return bool
+     */
     public static function validatemail(string $mail):bool
     {
         $codereturn=false;
